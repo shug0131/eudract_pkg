@@ -16,5 +16,10 @@ LazyData: true
 Imports: tidyr, xslt, dplyr, xml2, utils, magrittr, httr
 Depends: R (>= 3.5.0)
 RoxygenNote: 7.1.1
-Suggests: testthat, knitr, rmarkdown, stringr
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    stringr,
+    covr
 VignetteBuilder: knitr

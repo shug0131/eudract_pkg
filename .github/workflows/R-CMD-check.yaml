@@ -23,9 +23,9 @@ jobs:
         config:
           - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel/1'}
+#          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+#          - {os: ubuntu-latest,   r: 'release'}
+#          - {os: ubuntu-latest,   r: 'oldrel/1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -62,7 +62,7 @@ jobs:
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
-        working-directory: R/eudract
+        
 
       - name: Upload check results
         if: failure()
