@@ -1,7 +1,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/shug0131/eudraCT/workflows/R-CMD-check/badge.svg)](https://github.com/shug0131/eudract_pkg/actions)
+[![R-CMD-check](https://github.com/shug0131/eudract_pkg/workflows/R-CMD-check/badge.svg)](https://github.com/shug0131/eudract_pkg/actions)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/shug0131/eudract_pkg?branch=master&svg=true)](https://ci.appveyor.com/project/shug0131/eudract_pkg)
 [![Codecov
