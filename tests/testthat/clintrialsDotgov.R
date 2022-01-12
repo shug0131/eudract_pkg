@@ -14,6 +14,8 @@ clintrials_gov_convert(input=file.path(path, "simple.xml"),
 
 output <- clintrials_gov_upload(
   input=file.path(path, "simple.xml"),
+  backup=file.path(path, "bak_study_file.xml"),
+   output=file.path(path, "study_file.xml"),
   orgname="AddenbrookesH",
   username=Sys.getenv("ct_user"),
   password=Sys.getenv("ct_pass"),

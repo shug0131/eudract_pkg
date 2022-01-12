@@ -132,8 +132,9 @@ safety_summary <- function(data, exposed, excess_deaths=0, freq_threshold=0, soc
       group_by(term, soc, group) %>%
       summarise(subjectsAffected=length(unique(subjid)),
                 occurrences=dplyr::n()
-      ) %>%
-      tidyr::complete(group, tidyr::nesting(term, soc), fill=list("subjectsAffected"=0, "occurrences"=0)) %>%
+      ) %>% ungroup %>% 
+      tidyr::complete(group, tidyr::nesting(term, soc), 
+                      fill=list("subjectsAffected"=0, "occurrences"=0)) %>%
       rename("groupTitle"="group") %>%
       left_join(soc_code, by=c("soc"=soc_index)) %>% ungroup() %>%
       select(groupTitle,subjectsAffected, occurrences,term,eutctId)
@@ -157,7 +158,7 @@ safety_summary <- function(data, exposed, excess_deaths=0, freq_threshold=0, soc
                 occurrencesCausallyRelatedToTreatment=sum(related),
                 deaths=sum(fatal),
                 deathsCausallyRelatedToTreatment=sum(fatal*related)
-      ) %>%
+      ) %>% ungroup %>% 
       tidyr::complete(group, tidyr::nesting(term, soc),
                       fill=list("subjectsAffected"=0,
                                 "occurrences"=0,
