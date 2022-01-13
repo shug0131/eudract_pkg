@@ -15,9 +15,9 @@ devtools::build()
 devtools::test()
 
 #Check you've got the right version number
-install.packages("../eudract_0.11.0.tar.gz",
+install.packages("../eudract_0.10.1.tar.gz",
                  repos = NULL, type = "source")
-devtools::build("../eudract_0.11.0.tar.gz", binary=TRUE)
+devtools::build("../eudract_0.10.1.tar.gz", binary=TRUE)
 
 
 #devtools::build( binary=TRUE)

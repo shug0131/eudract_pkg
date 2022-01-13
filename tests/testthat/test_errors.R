@@ -162,3 +162,60 @@ test_that("create.safety_summary name checks",
 
           )
 
+test_that("empty user details",
+          {
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="",
+              username=Sys.getenv("ct_user"),
+              password=Sys.getenv("ct_pass"),
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid orgname argument"
+            )
+            
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username="",
+              password=Sys.getenv("ct_pass"),
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid username argument"
+            )
+            
+            if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username=Sys.getenv("ct_user"),
+              password="",
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid password argument"
+            )
+            
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username=Sys.getenv("ct_user"),
+              password=Sys.getenv("ct_pass"),
+              studyid="",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid studyid argument"
+            )
+            
+            
+            
+            }
+          
+          )
+

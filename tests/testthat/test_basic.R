@@ -289,7 +289,7 @@ test_that("convert to eudract",{
 
 if(is_testing()){original_path <- "."}else{original_path <- "tests/testthat"}
 test_that("convert to ClinicalTrials.Gov",{
-  skip("fails due to test_that rather than actually failing")
+  #skip("fails due to test_that rather than actually failing")
   clintrials_gov_convert(input=file.path(path,"simple.xml"),
                          original=file.path(original_path, "1234.xml"),
                          output=file.path(path,"table_ct.xml")
@@ -299,6 +299,22 @@ test_that("convert to ClinicalTrials.Gov",{
   new <- read_xml(file.path(path,"table_ct.xml"))
   ref <- read_xml(file.path(reference_path,"table_ct.xml"))
   expect_equal(new,ref)
+  
+  
+  if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+  output <- clintrials_gov_upload(
+    input=file.path(path, "simple.xml"),
+    backup=file.path(path,"bak_study_file.xml"),
+    output=file.path(path,"study_file.xml"),
+    orgname="AddenbrookesH",
+    username=Sys.getenv("ct_user"),
+    password=Sys.getenv("ct_pass"),
+    studyid="1234",
+    url="https://prstest.clinicaltrials.gov/"
+    
+  )
+  expect_equal(names(output), c("download", "upload"))
+  
 }
 )
 

@@ -78,6 +78,8 @@ tmp <-  POST(url="https://prstest.clinicaltrials.gov/prs/app/action/ExternalDown
 )
 #https://prstest.clinicaltrials.gov/prs/app/action/SaveCopy/protocol_record.xml?uid=U00032SX&ts=7&sid=S0006HWA&cx=20xqns
 
+content(tmp)
+
 write_xml(content(tmp), file=file.path(path, "download.xml"))
 
 myfile <- readLines(con=file.path(path, "trial.xml"))

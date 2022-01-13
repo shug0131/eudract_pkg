@@ -1,8 +1,8 @@
 Package: eudract
 Type: Package
 Title: Creates Safety Results Summary in XML to Upload to EudraCT, or ClinicalTrials.gov
-Date: 2021-03-31
-Version: 0.11.0
+Date: 2022-01-13
+Version: 0.10.1
 Authors@R: c(
     person("Simon", "Bond", email="simon.bond@addenbrookes.nhs.uk", role="cre"),
     person("Beatrice","Pantaleo", email="bp403@medschl.cam.ac.uk", role="aut"))
@@ -15,7 +15,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: tidyr, xslt, dplyr, xml2, utils, magrittr, httr
 Depends: R (>= 3.5.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     testthat,
     knitr,

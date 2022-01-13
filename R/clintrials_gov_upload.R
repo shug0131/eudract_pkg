@@ -34,6 +34,11 @@ clintrials_gov_upload <- function(input, orgname, username, password, studyid,
                             schema_output= system.file("extdata", "ProtocolRecordSchema.xsd", package="eudract"),
                             soc=system.file("extdata","soc.xml", package="eudract")
 ){
+   if(orgname==""){stop("invalid orgname argument")}
+   if(username==""){stop("invalid username argument")}
+   if(password==""){stop("invalid password argument")}
+   if(studyid==""){stop("invalid studyid argument")}
+   
   #Download the original study file
   download <-  httr::POST(url=paste0(url,"prs/app/action/ExternalDownload/"),
                body=list(
@@ -68,7 +73,7 @@ clintrials_gov_upload <- function(input, orgname, username, password, studyid,
    )
  }
 
- if(is.na(check_answer) ||!check_answer){
+ if(check && !check_answer){
    print("Upload halted")
    upload_result <- NULL
  } else{

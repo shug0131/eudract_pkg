@@ -1,4 +1,6 @@
+# eudract v0.10.1
 
+Added in testing of ct.gov functions, some of which works via test_that, and some needs user/passwords, and so shoudl be sensitively skiped.  Resolving future-compatibility issues with `tidyr::complete` .
 
 
 

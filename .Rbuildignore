@@ -11,3 +11,4 @@
 ^tests\testthat\archive$
 ^\.github$
 ^appveyor.yml$
+^\.git$
