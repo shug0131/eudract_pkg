@@ -4,6 +4,15 @@
 * Windows Server 2012 R2 x64 (build 9600) on (appveyor), R3.6.1
 * check_win_release
 
+
+## Change January 2022
+
+Further testing of clinicaltrials.gov functions. Update to provide future compatibility with tidyr::complete().  
+
+Note that the "Clinica lTrials.gov" is not a spelling error in the DESCRIPTION file as it refers to an website
+of that name. 
+
+
 ## Change April2021
 
 Adding new function and underlying xslt to facilitate uploads to ClinicalTrials.gov as well as EudraCT .

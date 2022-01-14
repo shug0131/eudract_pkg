@@ -11,6 +11,7 @@
 #' @param excess_deaths a numeric vector giving the number of extra deaths not reported within \code{data}. Defaults to 0.
 #' @param freq_threshold a value on a percentage scale at which to remove events if the incidence falls below. Defaults to 0
 #' @param soc_index a character vector either "meddra" or "soc_term", which is used to identify if the soc variable in data gives the numerical meddra code or the description in English.
+#' @param na.action a function that indicates what should happen if the data contain missing values. The default is \code{\link{na.fail}}  as both repositories will not accept any missing values in the upload. Alternatives could be \code{\link{na.omit}}, \code{\link{na.exclude}}, or \code{\link{na.pass}}.
 #' @return a list of three dataframes: GROUP, SERIOUS, NON_SERIOUS. Each contains the summary statistics required by EudraCT, and is suitable for export.
 #'
 #' @seealso \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
@@ -18,11 +19,15 @@
 #' @export
 #' @importFrom dplyr group_by summarise left_join mutate select rename ungroup %>%
 #' @importFrom magrittr %<>%
+#' @importFrom stats na.fail
 #' @example example/canonical.R
 
 
 
-safety_summary <- function(data, exposed, excess_deaths=0, freq_threshold=0, soc_index=c("meddra","soc_term")){
+safety_summary <- function(data, exposed, excess_deaths=0, 
+                           freq_threshold=0, soc_index=c("meddra","soc_term"),
+                           na.action=na.fail
+                           ){
   #check the names of data
 
   var_names <- c("subjid", "term", "soc", "serious", "related", "fatal", "group")
@@ -33,6 +38,25 @@ safety_summary <- function(data, exposed, excess_deaths=0, freq_threshold=0, soc
   }
   name_check <-  names(data) %in% var_names
   data <- data[,name_check]
+  
+  # remove any trailing white space
+  data <- lapply(data, function(x){ if(is.character(x)){trimws(x)}else{x}} ) %>% 
+    as.data.frame
+  if( !is.null(names(exposed))) {
+    names(exposed) <- exposed %>% names %>% trimws
+  }
+  
+  # check for NA or empty strings
+  if( anyNA(data) | any(data=="")){
+   warning("Your input data contain missing values or empty strings. 
+           The output XML is likely to be rejected by EudraCT or ClinicalTrials, 
+           or will not report some of the adverse events.")
+  }
+  data <- lapply(data, function(x){
+    if( is.character(x)){ifelse(x=="", NA, x)
+      }else{x} }) %>% as.data.frame
+  data <- na.action(data)
+  
   # check if name and length of exposed matches
   group_names <- unique(as.character(data$group))
   if( length(exposed) < length(group_names)){

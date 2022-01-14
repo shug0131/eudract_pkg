@@ -219,3 +219,15 @@ test_that("empty user details",
           
           )
 
+test_that("missing values",
+          {
+          aes <- read.csv(file.path(path,"data/events.csv"), stringsAsFactors = FALSE)
+          aes$soc[1] <- NA
+          expect_warning(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term", na.action=na.omit),"Your input data contain missing")   
+          aes$soc[1] <- ""
+          expect_warning(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term", na.action=na.omit),"Your input data contain missing")   
+          expect_error(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term"))   
+          
+          }
+)
+

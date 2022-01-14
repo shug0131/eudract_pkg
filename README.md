@@ -5,15 +5,8 @@
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/shug0131/eudract_pkg?branch=master&svg=true)](https://ci.appveyor.com/project/shug0131/eudract_pkg)
 [![Codecov
-eudract_pkg](https://codecov.io/gh/shug0131/eudract_pkg/branch/master/graph/badge.svg)](https://codecov.io/gh/shug0131/eudract_pkg?branch=master)
+eudract_pkg](https://codecov.io/gh/shug0131/eudract_pkg/branch/master/graph/badge.svg)](hhttps://app.codecov.io/gh/shug0131/eudract_pkg?branch=master)
 <!-- badges: end -->
-
-## Historical CI
-
-[![Travis-CI Build Status (not
-active)](https://travis-ci.com/shug0131/eudraCT.svg?branch=master)](https://travis-ci.com/shug0131/eudraCT)
-[![codecov eudraCT (not
-active)](https://codecov.io/github/shug0131/eudraCT/branch/master/graphs/badge.svg)](https://codecov.io/github/shug0131/eudraCT)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -35,7 +28,7 @@ You can install the very latest version on github with:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("shug0131/eudraCT/R/eudract")
+devtools::install_github("shug0131/eudract_pkg")
 ```
 
 ## Documentation
