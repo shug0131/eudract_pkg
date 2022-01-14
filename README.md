@@ -5,7 +5,7 @@
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/shug0131/eudract_pkg?branch=master&svg=true)](https://ci.appveyor.com/project/shug0131/eudract_pkg)
 [![Codecov
-eudract_pkg](https://codecov.io/gh/shug0131/eudract_pkg/branch/master/graph/badge.svg)](hhttps://app.codecov.io/gh/shug0131/eudract_pkg?branch=master)
+eudract_pkg](https://codecov.io/gh/shug0131/eudract_pkg/branch/master/graph/badge.svg)](https://app.codecov.io/gh/shug0131/eudract_pkg?branch=master)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
