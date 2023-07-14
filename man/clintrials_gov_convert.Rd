@@ -11,8 +11,7 @@ clintrials_gov_convert(
   xslt = system.file("extdata", "simpleToCtGov.xslt", package = "eudract"),
   schema_input = system.file("extdata", "simple.xsd", package = "eudract"),
   schema_results = system.file("extdata", "RRSUploadSchema.xsd", package = "eudract"),
-  schema_output = system.file("extdata", "ProtocolRecordSchema.xsd", package =
-    "eudract"),
+  schema_output = system.file("extdata", "ProtocolRecordSchema.xsd", package = "eudract"),
   soc = system.file("extdata", "soc.xml", package = "eudract")
 )
 }

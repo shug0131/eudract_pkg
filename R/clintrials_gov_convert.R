@@ -35,7 +35,8 @@ clintrials_gov_convert <- function(input, original, output,
   
   # in the testing environment the schema that looks up another schema fails.
   # issue is raised in github/r-lib/xml2
-  check_in <- ifelse( identical(Sys.getenv("TESTTHAT"), "true"),TRUE,
+  check_in <- ifelse( FALSE,#identical(Sys.getenv("TESTTHAT"), "true"),
+                      TRUE,
                       xml2::xml_validate(original, schema_output))
   if( !check_in){ stop("original study file is invalid \n", attr(check_in,"errors"))}
 
@@ -72,6 +73,6 @@ clintrials_gov_convert <- function(input, original, output,
                        xml2::xml_validate(original, schema_output))
   if( !check_out){ warning(attr(check_out,"errors"))}
 
-  message("Please email cctu@addenbrookes.nhs.uk to tell us if you have successfully uploaded a study to ClinicalTrials.gov .\nThis is to allow us to measure the impact of this tool.")
+  message("Please email cuh.cctu@nhs.netk to tell us if you have successfully uploaded a study to ClinicalTrials.gov .\nThis is to allow us to measure the impact of this tool.")
   invisible(check_out)
 }

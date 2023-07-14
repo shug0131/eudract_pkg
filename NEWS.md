@@ -1,3 +1,8 @@
+# eudract v0.10.2
+
+modifying contact details
+
+
 # eudract v0.10.1
 
 Added in testing of ClinicalTrials.gov functions, some of which works via test_that, and some needs user/passwords, and so should be sensitively skipped.  Resolving future-compatibility issues with `tidyr::complete` .
