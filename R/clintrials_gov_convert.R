@@ -73,6 +73,6 @@ clintrials_gov_convert <- function(input, original, output,
                        xml2::xml_validate(original, schema_output))
   if( !check_out){ warning(attr(check_out,"errors"))}
 
-  message("Please email cuh.cctu@nhs.netk to tell us if you have successfully uploaded a study to ClinicalTrials.gov .\nThis is to allow us to measure the impact of this tool.")
+  message("Please email cuh.cctu@nhs.net to tell us if you have successfully uploaded a study to ClinicalTrials.gov .\nThis is to allow us to measure the impact of this tool.")
   invisible(check_out)
 }
