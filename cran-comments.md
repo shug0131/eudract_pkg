@@ -1,3 +1,7 @@
+## Change July 2023
+
+Updated contact details
+
 ## Test environments
 * local x86_64-w64-mingw32/x64 (64-bit) install, R 3.6.0
 * Ubuntu 16.04.6 LTS (on travis-ci), R 3.6.1
