@@ -18,7 +18,7 @@
 #' @examples 
 #' safety_statistics <- safety_summary(safety,
 #'            exposed=c("Experimental"=60,"Control"=67))
-#' incidence_table(safety_statistics, type="serious") %>% head
+#' head( incidence_table(safety_statistics, type="serious") )
 
 incidence_table <- function(safety, 
                             type=c("non_serious", "serious"),
@@ -32,7 +32,7 @@ incidence_table <- function(safety,
   
   output <- df %>% 
     mutate( eutctId=as.double(eutctId)) %>% 
-    left_join(eudract::soc_code, by="eutctId") %>% 
+    left_join(soc_code, by="eutctId") %>% 
     left_join(denom, by=c("groupTitle"="title")) %>% 
     mutate( pct=round(as.integer(subjectsAffected)/as.integer(subjectsExposed)*100, digits = percent_round),
             text= paste0(pct,"% (",subjectsAffected,", ", occurrences,")")
@@ -40,7 +40,7 @@ incidence_table <- function(safety,
     tidyr::pivot_wider(names_from = groupTitle, values_from = text) %>% 
     dplyr::arrange(soc_term, term) %>% 
     mutate( soc=ifelse(duplicated(soc_term),"",soc_term) )%>% 
-    select(soc, term, any_of(safety$GROUP$title))
+    select(soc, term, dplyr::any_of(safety$GROUP$title))
   header <- c("System Organ Class","Preferred Term",
               paste0(  safety$GROUP$title, " (N = ", safety$GROUP$subjectsExposed,")")
   )

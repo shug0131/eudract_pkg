@@ -16,7 +16,9 @@ percentage. Default of 0. Maybe you need more if there is a large sample size
 and a rare event of interest}
 }
 \value{
-a data.frame that can be directly printed as a table to a report
+a data.frame that can be directly printed as a table to a report.  Each arm has its own column
+and the text contains "p% (r, o)",  where r is the number of participants with the term, 
+o is the number of occurrences, and p a percentage of participants with the term.
 }
 \description{
 provide standard structured tables to report incidence rates of AEs by arm
@@ -24,8 +26,8 @@ provide standard structured tables to report incidence rates of AEs by arm
 \examples{
 safety_statistics <- safety_summary(safety,
            exposed=c("Experimental"=60,"Control"=67))
-incidence_table(safety_statistics, type="serious") \%>\% head
+head( incidence_table(safety_statistics, type="serious") )
 }
 \seealso{
-[safety_summary()]
+\code{\link{safety_summary}}
 }
