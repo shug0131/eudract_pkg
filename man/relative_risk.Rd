@@ -3,6 +3,7 @@
 \name{relative_risk}
 \alias{relative_risk}
 \alias{relative_risk_table}
+\alias{order_filter}
 \title{Calculate relative risks to be reported or plotted as dot plot}
 \usage{
 relative_risk(
@@ -20,6 +21,8 @@ relative_risk_table(
   digits = 3,
   valid_estimates = TRUE
 )
+
+order_filter(rel_risk, threshold = 10)
 }
 \arguments{
 \item{safety}{an object created by \code{\link{safety_summary}}}
@@ -36,12 +39,20 @@ Default is 95.}
 
 \item{valid_estimates}{a logical, which determines if only terms with valid estimates of relative risk are included in the table.
 The alternative is to include terms with zeroes.}
+
+\item{rel_risk}{a relative risk object}
+
+\item{threshold}{a threshold on the percent scale, the max percentage for a term the incidence rate needs to exceed}
 }
 \value{
 a data.frame that has the relative risk estimate and confidence intervals. 
 No adjustment made to deal with zeroes.
 
 A data frame that is suitable for printing to a report, giving relative risks
+
+a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
+then ordered by relative risk, into a factor, and filtered to only those terms with an incidence rate above
+the threshold.
 }
 \description{
 Calculate relative risks to be reported or plotted as dot plot
@@ -51,6 +62,9 @@ safety_statistics <- safety_summary(safety,
            exposed=c("Experimental"=60,"Control"=67))
 head( relative_risk(safety_statistics, type="serious") )
 relative_risk_table(safety_statistics, type="serious")
+rr <- relative_risk(safety_statistics)
+rr2 <- order_filter(rr, threshold=2)
+dot_plot(rr2)
 }
 \seealso{
 \code{\link{safety_summary}} \code{\link{dot_plot}}

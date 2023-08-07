@@ -11,7 +11,6 @@
 #' No adjustment made to deal with zeroes. 
 #' @seealso  \code{\link{safety_summary}} \code{\link{dot_plot}}
 #' 
-#' @rdname relative_risk_table
 #' 
 #' @export
 #' @importFrom dplyr left_join mutate select arrange
@@ -22,6 +21,9 @@
 #'            exposed=c("Experimental"=60,"Control"=67))
 #' head( relative_risk(safety_statistics, type="serious") )
 #' relative_risk_table(safety_statistics, type="serious")
+#' rr <- relative_risk(safety_statistics)
+#' rr2 <- order_filter(rr, threshold=2)
+#' dot_plot(rr2)
 
 relative_risk <- function(safety,
                           type=c("non_serious", "serious"),
@@ -69,7 +71,9 @@ relative_risk <- function(safety,
     )
   
   output <- list("relative_risk"=rr %>% as.data.frame,
-       "percentage"=df %>% as.data.frame)
+       "percentage"=df %>% as.data.frame,
+       "GROUP"=safety$GROUP
+       )
   class(output) <- "relative_risk"
   output
 }
@@ -85,6 +89,7 @@ relative_risk <- function(safety,
 #' The alternative is to include terms with zeroes.
 #' @return A data frame that is suitable for printing to a report, giving relative risks
 #' @export
+#' @rdname relative_risk
 
 relative_risk_table <- function(safety,
                                 type=c("non_serious", "serious"),
@@ -118,6 +123,45 @@ relative_risk_table <- function(safety,
 # relative_risk_table(safety_statistics, type="serious")
 # relative_risk_table(safety_statistics, type="serious", reference="Experimental")
 # relative_risk_table(safety_statistics, type="non_serious", reference="Experimental")
+
+
+#' @param rel_risk a relative risk object
+#' @param threshold a threshold on the percent scale, the max percentage for a term the incidence rate needs to exceed
+#' @export
+#' @returns a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
+#' then ordered by relative risk, into a factor, and filtered to only those terms with an incidence rate above
+#' the threshold.
+#' @rdname relative_risk
+
+order_filter <- function(rel_risk,threshold=10){
+  if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
+  terms <- rel_risk$relative_risk$term 
+  dups <- terms[duplicated(terms)]
+  
+  rr2 <- rel_risk$relative_risk %>% 
+    mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+  index <- order(rr2$rr)
+  
+  rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
+  pct2 <- rel_risk$percentage%>% 
+    mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+  pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
+  
+  rel_risk_ord <- rel_risk
+  rel_risk_ord$relative_risk <- rr2
+  rel_risk_ord$percentage <- pct2
+  
+  
+  keep <- pct2 %>% group_by(term) %>% 
+    summarise( keep= threshold < max(pct)) %>% dplyr::filter(keep) %>% 
+    dplyr::pull(term)
+  rel_risk_ord <- rel_risk
+  rel_risk_ord$relative_risk <- rr2 %>% dplyr::filter( term %in% keep)
+  rel_risk_ord$percentage <- pct2 %>% dplyr::filter( term %in% keep)
+  rel_risk_ord
+}
+
+
 
 
 

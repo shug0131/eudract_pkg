@@ -1,7 +1,9 @@
 #' creates a dot-plot of safety data showing the absolute and relative risks
 #' 
 #' @inheritParams relative_risk
- #' @param text_width Integer giving a target width to which the labels are wrapped. Defaults to 10.
+#' 
+#' @param safety  an object created by \code{\link{safety_summary}} or by \code{\link{relative_risk}}, in case you want to re-order or filter the choice of rows.
+#' @param text_width Integer giving a target width to which the labels are wrapped. Defaults to 10.
 #' @param base numeric value to which a log scale uses as tick marks. Suggest powers of 2, or 5.
 #' 
 #' @return a graphical object that shows the estimates and CI of relative and absolute risk.
@@ -29,17 +31,32 @@ dot_plot <- function(safety,
 ){
   tidy_text <- function(x){ sapply( strwrap(x, width=text_width, simplify=FALSE),
                                     paste0, collapse="\n")}
-  
-  obj <- relative_risk(safety,type,reference,size)
+  if(inherits(safety,"safety_summary")){
+    obj <- relative_risk(safety,type,reference,size)
+  }
+  if( inherits(safety,"relative_risk")){
+   obj <- safety 
+  }
+  if( !inherits(safety, c("safety_summary","relative_risk"))){
+   stop("invalid input: needs to be either safety_summary or relative_risk object") 
+  }
   
   obj$relative_risk %<>% 
     mutate(
-      term=tidy_text(term),
+      #term=tidy_text(term),
       rr=ifelse(is.infinite(rr),NA, rr),
       lower=ifelse(is.infinite(lower),NA, lower),
       upper=ifelse(is.infinite(upper),NA, upper),     
     )
-  obj$percentage %<>% mutate(term=tidy_text(term))
+  if( is.factor(obj$relative_risk$term)){
+   levels( obj$relative_risk$term) <- tidy_text(levels( obj$relative_risk$term) )
+   levels( obj$percentage$term) <- tidy_text(levels( obj$percentage$term) )
+  }else{
+    obj$relative_risk$term <- tidy_text(obj$relative_risk$term)
+    obj$percentage$term <- tidy_text(obj$percentage$term)
+  }
+  
+ # obj$percentage %<>% mutate(term=tidy_text(term))
   if( valid_estimates){
     obj$relative_risk %<>% dplyr::filter(!is.na(rr))
     index <-paste(obj$percentage$soc_term,obj$percentage$term) %in%
@@ -62,19 +79,22 @@ dot_plot <- function(safety,
     scale_y_continuous(breaks = pretty(obj$percentage$pct)) +
     ret()
   
-  n_groups=nrow(safety$GROUP)
+  n_groups=nrow(obj$GROUP)
   
-  cols <- scales::hue_pal()(n_groups)[-1]
+  title <- sort(obj$GROUP$title)
+  ref_index <- which(title==reference)
+  
+  cols <- scales::hue_pal()(n_groups)[-ref_index]
   # set shapes
-  shps <- scales::shape_pal()(n_groups)[-1]
-  names(shps) <- names(cols) <- safety$GROUP$title[ safety$GROUP$title!=reference]
+  shps <- scales::shape_pal()(n_groups)[-ref_index]
+  names(shps) <- names(cols) <- title[ -ref_index]
   
   
   pd <- position_dodge(0.5)
   right.panel <- ggplot(data=obj$relative_risk,aes(x=term, y=rr, shape = group,colour=group))+
     #geom_pointrange(data = ae_rr, aes(x=pt, y=rr, ymin=rr.LCI, ymax=rr.UCI)) +
     geom_point( position = pd, size = 2.5)+
-    geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
+    #geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
     scale_color_manual(values=cols) +
     scale_shape_manual(values=shps) +
     coord_flip()+
@@ -89,6 +109,15 @@ dot_plot <- function(safety,
     geom_hline(yintercept = 1, linetype="dotted", color = "black", linewidth=0.5) +
     xlab("")  +
     ret(y.blank = T)
+  
+  if(n_groups==2){
+    right.panel <- right.panel+ 
+      geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2,colour="black")
+    }else{
+      right.panel <- right.panel+ 
+        geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)  
+    }
+  
   
   #Deal with legend
   lg <- g_legend(left.panel)
@@ -149,6 +178,34 @@ if(getRversion() >= "2.15.1"){
 ## work how to combine serious and non-serious.
 ## add documentation
 ## add testing. 
+## test with 3 or more groups
 
 
+order_filter <- function(rel_risk,threshold=10){
+  if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
+  terms <- rel_risk$relative_risk$term 
+  dups <- terms[duplicated(terms)]
+
+  rr2 <- rel_risk$relative_risk %>% 
+  mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+  index <- order(rr2$rr)
+  
+  rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
+  pct2 <- rel_risk$percentage%>% 
+    mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+  pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
+  
+  rel_risk_ord <- rel_risk
+  rel_risk_ord$relative_risk <- rr2
+  rel_risk_ord$percentage <- pct2
+  
+  
+  keep <- pct2 %>% group_by(term) %>% 
+    summarise( keep= threshold < max(pct)) %>% filter(keep) %>% 
+    pull(term)
+  rel_risk_ord <- rel_risk
+  rel_risk_ord$relative_risk <- rr2 %>% filter( term %in% keep)
+  rel_risk_ord$percentage <- pct2 %>% filter( term %in% keep)
+  rel_risk_ord
+}
 

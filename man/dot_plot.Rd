@@ -15,7 +15,7 @@ dot_plot(
 )
 }
 \arguments{
-\item{safety}{an object created by \code{\link{safety_summary}}}
+\item{safety}{an object created by \code{\link{safety_summary}} or by \code{\link{relative_risk}}, in case you want to re-order or filter the choice of rows.}
 
 \item{type}{a choice of "non_serious" (default) or "serious" as to which type of AE to report on}
 
