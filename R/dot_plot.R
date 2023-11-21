@@ -118,6 +118,19 @@ dot_plot <- function(safety,
         geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)  
     }
   
+    output <- list(left.panel=left.panel, right.panel=right.panel)
+    class(output) <- "dot_plot"
+    # so you can still edit the component ggplots using standard tools
+    print(output)
+    invisible(output)
+}
+
+
+## must export it else you won't be able to use the print method..
+#' @export
+print.dot_plot <- function(x,newpage=TRUE,...){
+  left.panel <- x$left.panel
+  right.panel <- x$right.panel
   
   #Deal with legend
   lg <- g_legend(left.panel)
@@ -132,8 +145,10 @@ dot_plot <- function(safety,
                                                plot.margin=unit(c(1,1,0,0), "cm")),
                            nrow=1),
                lg, nrow=2,
-               heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
-  
+               heights = grid::unit.c(unit(1, "npc") - lheight, lheight),
+               newpage = newpage
+               )
+  invisible(p)
 }
 
 ret <- function(y.blank = F){
