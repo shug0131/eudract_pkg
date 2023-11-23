@@ -14,6 +14,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
 #' @importFrom gridExtra  grid.arrange arrangeGrob
+#' @importFrom patchwork plot_layout
 #' 
 #' @examples 
 #' safety_statistics <- safety_summary(safety,
@@ -118,38 +119,71 @@ dot_plot <- function(safety,
         geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)  
     }
   
-    output <- list(left.panel=left.panel, right.panel=right.panel)
-    class(output) <- "dot_plot"
-    # so you can still edit the component ggplots using standard tools
-    print(output)
-    invisible(output)
+  # Version 1 pre patchwork  
+  output <- list(left.panel=left.panel, right.panel=right.panel)
+  #   class(output) <- c( "dot_plot")
+  #   # so you can still edit the component ggplots using standard tools
+  #   print(output)
+  #   invisible(output)
+  
+  print_dot_plot(output)
 }
 
 
-## must export it else you won't be able to use the print method..
-#' @export
-print.dot_plot <- function(x,newpage=TRUE,...){
+## keeping it internal
+
+print_dot_plot <- function(x){
   left.panel <- x$left.panel
   right.panel <- x$right.panel
   
   #Deal with legend
   lg <- g_legend(left.panel)
-  lheight <- sum(lg$height)
-  lwidth <- sum(lg$width)
   
-  #Combine two plots
-  grid.arrange(arrangeGrob(left.panel + theme(legend.position="none",
-                                              plot.margin=unit(c(1,0,0,1), "cm")),
-                           right.panel + theme(axis.text.y=element_blank(),
-                                               legend.position = "none",
-                                               plot.margin=unit(c(1,1,0,0), "cm")),
-                           nrow=1),
-               lg, nrow=2,
-               heights = grid::unit.c(unit(1, "npc") - lheight, lheight),
-               newpage = newpage
-               )
-  invisible(p)
+  # get number of rows 
+  
+  n <- dplyr::n_distinct( left.panel$data$term)
+  
+  ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
+    plot_layout(heights=c(n+1,1))
+  #invisible(x)
+  # 
+  # 
+  # lheight <- sum(lg$height)
+  # lwidth <- sum(lg$width)
+  # 
+  # #Combine two plots
+  # grid.arrange(arrangeGrob(left.panel + theme(legend.position="none",
+  #                                             plot.margin=unit(c(1,0,0,1), "cm")),
+  #                          right.panel + theme(axis.text.y=element_blank(),
+  #                                              legend.position = "none",
+  #                                              plot.margin=unit(c(1,1,0,0), "cm")),
+  #                          nrow=1),
+  #              lg, nrow=2,
+  #              heights = grid::unit.c(unit(1, "npc") - lheight, lheight),
+  #              newpage = newpage
+  #              )
+  # invisible(x)
 }
+
+#' @export
+seperate_dot_plot <- function(x){
+  left.panel=x[[1]][[1]]+ret()
+  right.panel=x[[1]][[2]]+ret()
+  legend=x[[2]]
+  list( left.panel=left.panel, right.panel=right.panel, legend=legend)  
+}
+
+
+
+#' 
+#' 
+ # `%add%` <- function(e1,e2){
+ #  p <- lapply(e1, function(x,y){x+y}, y=e2)
+ #  class(p) <- "dot_plot"
+ #  p
+ # }
+
+
 
 ret <- function(y.blank = F){
   th <- theme(rect = element_rect(fill ="#FFFFFF", linetype = 0, colour = NA),
@@ -195,6 +229,7 @@ if(getRversion() >= "2.15.1"){
 ## add testing. 
 ## test with 3 or more groups
 
+## THIS IS ALSO In the relative_risk  so delete one ---!!
 
 order_filter <- function(rel_risk,threshold=10){
   if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
