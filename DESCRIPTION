@@ -13,7 +13,7 @@ License: GPL-2
 Language: en-GB
 Encoding: UTF-8
 LazyData: true
-Imports: tidyr, xslt, dplyr, xml2, utils, magrittr, httr, ggplot2, scales, gridExtra, grid, patchwork
+Imports: tidyr, xslt, dplyr, xml2, utils, magrittr, httr, ggplot2, scales, patchwork
 Depends: R (>= 3.5.0)
 RoxygenNote: 7.2.3
 Suggests: 

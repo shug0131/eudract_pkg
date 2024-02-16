@@ -13,7 +13,6 @@
 #' @importFrom dplyr left_join mutate select arrange
 #' @importFrom magrittr %>%
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
-#' @importFrom gridExtra  grid.arrange arrangeGrob
 #' @importFrom patchwork plot_layout
 #' 
 #' @examples 
@@ -164,6 +163,21 @@ print_dot_plot <- function(x){
   #              )
   # invisible(x)
 }
+
+
+#' extracts the sub-plots of a dot_plot object and returns a list of two ggplot objects
+#' 
+#' @param x dot_plot object
+#' @returns a list of two individual ggplot objects
+#' 
+#' @details
+#' Can be used to edit the finer details of a plot as desired. Then join back together with
+#' functions from \code{patchwork} package. Or assign the modified list the class \code{dot_plot}, and the 
+#' print method will handle it implicitly. 
+#' 
+#' 
+#'  
+#' @seealso [dot_plot()]
 
 #' @export
 seperate_dot_plot <- function(x){
