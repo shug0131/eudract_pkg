@@ -15,11 +15,23 @@
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
 #' @importFrom patchwork plot_layout
 #' 
+#' @details This is essentially a list of two ggplot objects joined together in a list, named
+#' as "left.panel" and "right.panel". 
+#' They can each be individually edited if needed
+#' 
 #' @examples 
 #' safety_statistics <- safety_summary(safety,
 #'            exposed=c("Experimental"=60,"Control"=67))
 #' head( relative_risk(safety_statistics, type="serious") )
-#' dot_plot(safety_statistics, type="non_serious", base=4)
+#' fig <- dot_plot(safety_statistics, type="non_serious", base=4)
+#' fig
+#' fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
+#' fig
+#' temp <- tempfile(fileext=".png")
+#' png(filename = temp)
+#' print(fig)
+#' dev.off()
+#' 
 
 dot_plot <- function(safety,
                      type=c("non_serious", "serious"),
@@ -120,18 +132,21 @@ dot_plot <- function(safety,
   
   # Version 1 pre patchwork  
   output <- list(left.panel=left.panel, right.panel=right.panel)
-  #   class(output) <- c( "dot_plot")
+  class(output) <- c( "dot_plot")
   #   # so you can still edit the component ggplots using standard tools
   #   print(output)
   #   invisible(output)
   
-  print_dot_plot(output)
+  output
 }
 
+#' print methods for dot_plot object
+#' 
+#' @param x dot_plot obkect
+#' @param ... other arguments for generic methods
 
-## keeping it internal
-
-print_dot_plot <- function(x){
+#' @export
+print.dot_plot <- function(x,...){
   left.panel <- x$left.panel
   right.panel <- x$right.panel
   
@@ -142,60 +157,24 @@ print_dot_plot <- function(x){
   
   n <- dplyr::n_distinct( left.panel$data$term)
   
-  ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
+  print( 
+    ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
     plot_layout(heights=c(n+1,1))
-  #invisible(x)
-  # 
-  # 
-  # lheight <- sum(lg$height)
-  # lwidth <- sum(lg$width)
-  # 
-  # #Combine two plots
-  # grid.arrange(arrangeGrob(left.panel + theme(legend.position="none",
-  #                                             plot.margin=unit(c(1,0,0,1), "cm")),
-  #                          right.panel + theme(axis.text.y=element_blank(),
-  #                                              legend.position = "none",
-  #                                              plot.margin=unit(c(1,1,0,0), "cm")),
-  #                          nrow=1),
-  #              lg, nrow=2,
-  #              heights = grid::unit.c(unit(1, "npc") - lheight, lheight),
-  #              newpage = newpage
-  #              )
-  # invisible(x)
+  )
+  invisible(x)
+  
 }
 
 
-#' extracts the sub-plots of a dot_plot object and returns a list of two ggplot objects
+#' plot methods for dot_plot object
 #' 
 #' @param x dot_plot object
-#' @returns a list of two individual ggplot objects
-#' 
-#' @details
-#' Can be used to edit the finer details of a plot as desired. Then join back together with
-#' functions from \code{patchwork} package. Or assign the modified list the class \code{dot_plot}, and the 
-#' print method will handle it implicitly. 
-#' 
-#' 
-#'  
-#' @seealso [dot_plot()]
+#' @param ... other arguments for generic methods
 
 #' @export
-seperate_dot_plot <- function(x){
-  left.panel=x[[1]][[1]]+ret()
-  right.panel=x[[1]][[2]]+ret()
-  legend=x[[2]]
-  list( left.panel=left.panel, right.panel=right.panel, legend=legend)  
-}
+plot.dot_plot <- print.dot_plot
+  
 
-
-
-#' 
-#' 
- # `%add%` <- function(e1,e2){
- #  p <- lapply(e1, function(x,y){x+y}, y=e2)
- #  class(p) <- "dot_plot"
- #  p
- # }
 
 
 
