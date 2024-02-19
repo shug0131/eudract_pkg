@@ -6,7 +6,7 @@ on:
     types: 
       - completed
 
-  name: test-coverage
+name: test-coverage
 
 jobs:
   test-coverage:
