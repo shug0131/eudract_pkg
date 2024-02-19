@@ -23,30 +23,33 @@ save_png <- function(fig){
   temp
 }
 
-if (FALSE) {
-  local_edition(3)
-  expect_snapshot_file(save_png(fig), "plot.png")
-}
-test_that("compare image of dotplot",{
-  local_edition(3)
-  announce_snapshot_file("plot.png")
-  path <- save_png(fig)
-  expect_snapshot_file(path,"plot.png")
-})
-
-
-# test_that("dotplot",{
-#   temp <- withr::local_tempfile(fileext=".png")
-#   unlink(test_path("dotplot.png"))
-#   png(filename = test_path("dotplot.png"))
-#   fig
-#   dev.off()
-#   checksum <- tools::md5sum(c(test_path("dotplot.png"),test_path("reference_dotplot.png")))
-#   expect_true(file.exists(test_path("dotplot.png")))
-#   expect_equivalent(
-#     checksum[1],checksum[2])
-#   unlink(test_path("dotplot.png"))
+# if (FALSE) {
+#   local_edition(3)
+#   expect_snapshot_file(save_png(fig), "plot.png")
+# }
+# test_that("compare image of dotplot",{
+#   local_edition(3)
+#   announce_snapshot_file("plot.png")
+#   path <- save_png(fig)
+#   expect_snapshot_file(path,"plot.png")
 # })
+
+if(FALSE){
+  png("tests/testthat/reference_plot.png")
+  print(fig)
+  dev.off()
+  
+}
+
+
+test_that("dotplot",{
+  temp <- save_png(fig)
+  #unlink(test_path("dotplot.png"))
+  checksum <- tools::md5sum(c(test_path(temp),test_path("reference_plot.png")))
+  expect_true(file.exists(test_path(temp)))
+  expect_equivalent(
+    checksum[1],checksum[2])
+})
 
 
 
