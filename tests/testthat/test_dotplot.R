@@ -1,6 +1,6 @@
 context("dotplot test")
-library(eudract)
-library(grDevices)
+#library(eudract)
+#library(grDevices)
 
 
 if( is_testing()){path <- tempdir()} else{ path <- "tests/testthat"}
@@ -15,41 +15,41 @@ print(fig)
 plot(fig)
 
 
-save_png <- function(fig){
-  temp <- tempfile(fileext=".png")
-  png(filename = temp)
+save_ps <- function(fig){
+  temp <- tempfile(fileext=".ps")
+  postscript(file = temp, onefile = TRUE)
   print(fig)  #  need to have print() as fig on its own doesn't work inside testthat
   on.exit(dev.off())
   temp
 }
 
-# if (FALSE) {
-#   local_edition(3)
-#   expect_snapshot_file(save_png(fig), "plot.png")
-# }
-# test_that("compare image of dotplot",{
-#   local_edition(3)
-#   announce_snapshot_file("plot.png")
-#   path <- save_png(fig)
-#   expect_snapshot_file(path,"plot.png")
-# })
+if (FALSE) {
+  local_edition(3)
+  expect_snapshot_file(save_ps(fig), "plot.ps")
+}
+test_that("compare image of dotplot",{
+  local_edition(3)
+  #announce_snapshot_file("plot.svg")
+  #path <- save_svg(fig)
+  expect_snapshot_file(save_ps(fig),"plot.ps")
+})
 
 if(FALSE){
-  png("tests/testthat/reference_plot.png")
+  svg("tests/testthat/reference_plot.svg")
   print(fig)
   dev.off()
   
 }
 
 
-test_that("dotplot",{
-  temp <- save_png(fig)
-  #unlink(test_path("dotplot.png"))
-  checksum <- tools::md5sum(c(test_path(temp),test_path("reference_plot.png")))
-  expect_true(file.exists(test_path(temp)))
-  expect_equivalent(
-    checksum[1],checksum[2])
-})
+# test_that("dotplot",{
+#   temp <- save_svg(fig)
+#   #unlink(test_path("dotplot.png"))
+#   checksum <- tools::md5sum(c(test_path(temp),test_path("reference_plot.svg")))
+#   #expect_true(file.exists(test_path(temp)))
+#   expect_equivalent(
+#     checksum[1],checksum[2])
+# })
 
 
 
