@@ -7,7 +7,7 @@
 #' and a rare event of interest
 #' 
 #' @return a data.frame that can be directly printed as a table to a report.  Each arm has its own column
-#' and the text contains "p% (r, o)",  where r is the number of participants with the term, 
+#' and the text contains "p\% (r, o)",  where r is the number of participants with the term, 
 #' o is the number of occurrences, and p a percentage of participants with the term.
 #' @seealso  \code{\link{safety_summary}}
 #' 
