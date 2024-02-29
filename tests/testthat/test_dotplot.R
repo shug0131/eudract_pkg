@@ -31,7 +31,8 @@ test_that("compare image of dotplot",{
   local_edition(3)
   #announce_snapshot_file("plot.svg")
   #path <- save_svg(fig)
-  expect_snapshot_file(save_ps(fig),"plot.ps")
+  #expect_snapshot_file(save_ps(fig),"plot.ps")
+  vdiffr::expect_doppelganger("dotplot", fig)
 })
 
 if(FALSE){
