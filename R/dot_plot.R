@@ -142,7 +142,7 @@ dot_plot <- function(safety,
 
 #' print methods for dot_plot object
 #' 
-#' @param x dot_plot obkect
+#' @param x dot_plot object
 #' @param ... other arguments for generic methods
 
 #' @export

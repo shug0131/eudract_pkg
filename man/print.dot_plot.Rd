@@ -7,7 +7,7 @@
 \method{print}{dot_plot}(x, ...)
 }
 \arguments{
-\item{x}{dot_plot obkect}
+\item{x}{dot_plot object}
 
 \item{...}{other arguments for generic methods}
 }

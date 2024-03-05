@@ -29,8 +29,8 @@ order_filter(rel_risk, threshold = 10)
 
 \item{type}{a choice of "non_serious" (default) or "serious" as to which type of AE to report on}
 
-\item{reference}{character vector nameing the refenrence arm for teh calculations. 
-Defualts to the first row of the safety$GROUP.}
+\item{reference}{character vector naming the reference arm for the calculations. 
+Defaults to the first row of the safety$GROUP.}
 
 \item{size}{a number between 0-100, giving the size of the confidence interval. 
 Default is 95.}
@@ -45,12 +45,14 @@ The alternative is to include terms with zeroes.}
 \item{threshold}{a threshold on the percent scale, the max percentage for a term the incidence rate needs to exceed}
 }
 \value{
-a data.frame that has the relative risk estimate and confidence intervals. 
-No adjustment made to deal with zeroes.
+\code{relative_risk} returns of list of three items. "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
+"percentage" a data.frame with absolute percentages. "GROUP" a copy from the original \code{safety_summary} object.
+No adjustment made to deal with zeroes. This is suitable input for the \code{dot_plot} function, and in most cases will not be 
+used directly, but may potentially be modified with filtration, or editing of terms, see \code{order_filter}.
 
-A data frame that is suitable for printing to a report, giving relative risks
+\code{relative_risk_table} returns a data frame that is suitable for printing to a report, giving relative risks
 
-a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
+\code{order_filter} returns a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
 then ordered by relative risk, into a factor, and filtered to only those terms with an incidence rate above
 the threshold.
 }

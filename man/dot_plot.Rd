@@ -19,8 +19,8 @@ dot_plot(
 
 \item{type}{a choice of "non_serious" (default) or "serious" as to which type of AE to report on}
 
-\item{reference}{character vector nameing the refenrence arm for teh calculations. 
-Defualts to the first row of the safety$GROUP.}
+\item{reference}{character vector naming the reference arm for the calculations. 
+Defaults to the first row of the safety$GROUP.}
 
 \item{size}{a number between 0-100, giving the size of the confidence interval. 
 Default is 95.}

@@ -13,3 +13,4 @@
 ^appveyor.yml$
 ^\.git$
 ^tests/testthat/archive$
+todo.txt
