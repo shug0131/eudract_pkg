@@ -223,32 +223,32 @@ if(getRversion() >= "2.15.1"){
 ## test with 3 or more groups
 
 ## THIS IS ALSO In the relative_risk  so delete one ---!!
-
-order_filter <- function(rel_risk,threshold=10){
-  if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
-  terms <- rel_risk$relative_risk$term 
-  dups <- terms[duplicated(terms)]
-
-  rr2 <- rel_risk$relative_risk %>% 
-  mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  index <- order(rr2$rr)
-  
-  rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
-  pct2 <- rel_risk$percentage%>% 
-    mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
-  
-  rel_risk_ord <- rel_risk
-  rel_risk_ord$relative_risk <- rr2
-  rel_risk_ord$percentage <- pct2
-  
-  
-  keep <- pct2 %>% group_by(term) %>% 
-    summarise( keep= threshold < max(pct)) %>% filter(keep) %>% 
-    pull(term)
-  rel_risk_ord <- rel_risk
-  rel_risk_ord$relative_risk <- rr2 %>% filter( term %in% keep)
-  rel_risk_ord$percentage <- pct2 %>% filter( term %in% keep)
-  rel_risk_ord
-}
-
+# 
+# order_filter <- function(rel_risk,threshold=10){
+#   if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
+#   terms <- rel_risk$relative_risk$term 
+#   dups <- terms[duplicated(terms)]
+# 
+#   rr2 <- rel_risk$relative_risk %>% 
+#   mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+#   index <- order(rr2$rr)
+#   
+#   rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
+#   pct2 <- rel_risk$percentage%>% 
+#     mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+#   pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
+#   
+#   rel_risk_ord <- rel_risk
+#   rel_risk_ord$relative_risk <- rr2
+#   rel_risk_ord$percentage <- pct2
+#   
+#   
+#   keep <- pct2 %>% group_by(term) %>% 
+#     summarise( keep= threshold < max(pct)) %>% filter(keep) %>% 
+#     pull(term)
+#   rel_risk_ord <- rel_risk
+#   rel_risk_ord$relative_risk <- rr2 %>% filter( term %in% keep)
+#   rel_risk_ord$percentage <- pct2 %>% filter( term %in% keep)
+#   rel_risk_ord
+# }
+# 

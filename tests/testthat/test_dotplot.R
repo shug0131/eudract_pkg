@@ -42,6 +42,33 @@ if(FALSE){
   
 }
 
+test_that("warnings for repeated terms",
+          {
+          expect_warning(
+          dot_plot(safety_statistics, type="non_serious", base=4, valid_estimates = FALSE),
+          "The same Preferred Term is used repeatedly with multiple System Organ Classes"
+          )
+          expect_error(dot_plot("whatever"),"invalid input: needs to be either safety_summary or relative_risk object")
+          }
+          )
+
+rr <- relative_risk(safety_statistics)
+rr$relative_risk$term <- as.factor(rr$relative_risk$term)
+rr$percentage$term <- as.factor(rr$percentage$term)
+
+test_that("relative risk object as input",{
+  fig2 <- dot_plot(rr, type="non_serious", base=4)
+  fig2
+  #fig2 <- ggplot(mapping=aes(x=x,y=y), data=data.frame(x=1,y=1))+geom_point()
+  ## This is bending the rules.  I want this to  compare to the reference output
+  ## that was create for line 35 above,  by using the same title "dotplot"
+  vdiffr::expect_doppelganger("dotplot", fig2)
+  }
+)
+
+
+
+
 
 # test_that("dotplot",{
 #   temp <- save_svg(fig)
@@ -64,16 +91,19 @@ test_that("incidence table",{
   expect_equal(tab[1,3],"1% (1, 1)")
 } )
 
-rr <- relative_risk(safety_statistics)
-rr2 <- order_filter(rr, threshold=2)
-min_pct <- rr2$percentage %>% group_by(term) %>% 
-  summarise( pct=max(pct)) %>% dplyr::pull(pct) %>% min
+# with 3 groups
+test_that("three groups",{
+other <- safety %>% filter(group=="Control") %>% 
+  mutate(group="Other")
+safety3 <- rbind(safety,other)
+stats3 <- safety_summary(safety3, exposed=c("Experimental"=60,"Control"=67, "Other"=67))
+fig_3groups <- dot_plot(stats3, reference="Control", type = "non_serious")
+local_edition(3)
+vdiffr::expect_doppelganger("dotplot_3groups", fig_3groups)
+})
 
-test_that("relative risk table",{
-  expect_equal(length(rr),3)
-  expect_s3_class(rr$relative_risk,"data.frame")
-  expect_s3_class(rr$percentage,"data.frame")
-  expect_s3_class(rr$GROUP,"data.frame")
-  expect_gt(min_pct, 2)
-} )
+#
 
+
+
+#other %>% safety_summary(exposed=c("Other=67")) %>% dot_plot

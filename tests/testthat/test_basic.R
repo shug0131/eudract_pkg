@@ -289,7 +289,7 @@ test_that("convert to eudract",{
 
 if(is_testing()){original_path <- "."}else{original_path <- "tests/testthat"}
 test_that("convert to ClinicalTrials.Gov",{
-  skip("fails due to test_that rather than actually failing")
+  #skip("fails due to test_that rather than actually failing")
  #something about a schema being referenced by another schema breaks down in test that.
    clintrials_gov_convert(input=file.path(path,"simple.xml"),
                          original=file.path(original_path, "1234.xml"),
@@ -347,8 +347,19 @@ test_that("create a safety summary by hand",{
 })
 
 
+## Attempting to create an error in line 32/33 of eudract_convert.R  
+## Seems the preceding checks will always apply first. 
 
-
-
-
+# safety_statistics <- safety_summary(safety, exposed=c("Experimental"=60,"Control"=67),
+#                                     freq_threshold = 6
+#                                     )
+# simple <- tempfile(fileext = ".xml")
+# eudract <- tempfile(fileext = ".xml")
+# #safety_statistics$SERIOUS$term <- NA
+# simple_safety_xml(safety_statistics, simple)
+# eudract_convert(input=simple,
+#                 output=eudract)
+# traceback()
+# 
+# readLines(eudract)
 
