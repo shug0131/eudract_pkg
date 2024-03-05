@@ -93,8 +93,8 @@ test_that("incidence table",{
 
 # with 3 groups
 test_that("three groups",{
-other <- safety %>% filter(group=="Control") %>% 
-  mutate(group="Other")
+other <- safety %>% dplyr::filter(group=="Control") %>% 
+  dplyr::mutate(group="Other")
 safety3 <- rbind(safety,other)
 stats3 <- safety_summary(safety3, exposed=c("Experimental"=60,"Control"=67, "Other"=67))
 fig_3groups <- dot_plot(stats3, reference="Control", type = "non_serious")
