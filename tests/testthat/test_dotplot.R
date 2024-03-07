@@ -106,6 +106,8 @@ vdiffr::expect_doppelganger("dotplot_3groups", fig_3groups)
 
 
 test_that("one_group",{
+  other <- safety %>% dplyr::filter(group=="Control") %>% 
+    dplyr::mutate(group="Other")
 fig_1group <- other %>% safety_summary(exposed=c("Other"=67)) %>% dot_plot
 vdiffr::expect_doppelganger("dotplot_1group", fig_1group)
 }
