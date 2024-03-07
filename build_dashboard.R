@@ -1,4 +1,4 @@
-
+source("ct_user_details.R")
 rcmdcheck::rcmdcheck()
 devtools::load_all()
 
