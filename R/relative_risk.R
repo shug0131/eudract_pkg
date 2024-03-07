@@ -103,16 +103,16 @@ relative_risk_table <- function(safety,
   
   df <- obj$relative_risk
   if( valid_estimates){df <- df %>% dplyr::filter(!is.na(rr)& !is.infinite(rr)) }
- cols <- df$group %>% unique %>% length
+ cols <- df$group %>% unique 
  df <- df %>% 
    dplyr::arrange(soc_term, term, group) %>% 
    mutate( 
      text=paste0(signif(rr,digits=digits), " (", signif(lower, digits=digits),", ", signif(upper, digits=digits),")")
    ) %>% 
    select(group,soc_term, term, text)
- if( 1<cols){
-   df <- tidyr::pivot_wider(names_from = "group", values_from = "text") 
-   header <- paste0(df$group %>% unique, " Relative Risk (C.I.)")
+ if( 1<length(cols)){
+   df <- tidyr::pivot_wider(df,names_from = "group", values_from = "text", values_fill = "-") 
+   header <- paste0(cols, " - Relative Risk (C.I.)")
  }else{
    df <- df %>% select(-group) 
    header <- "Relative Risk (C.I.)"

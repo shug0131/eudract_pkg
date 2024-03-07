@@ -105,5 +105,14 @@ vdiffr::expect_doppelganger("dotplot_3groups", fig_3groups)
 #
 
 
+test_that("one_group",{
+fig_1group <- other %>% safety_summary(exposed=c("Other"=67)) %>% dot_plot
+vdiffr::expect_doppelganger("dotplot_1group", fig_1group)
+}
+)
 
-#other %>% safety_summary(exposed=c("Other=67")) %>% dot_plot
+other %>% safety_summary(exposed=c("Other"=67)) %>% incidence_table()
+other %>% safety_summary(exposed=c("Other"=67)) %>% relative_risk()
+other %>% safety_summary(exposed=c("Other"=67)) %>% relative_risk_table()
+
+

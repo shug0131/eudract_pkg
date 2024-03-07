@@ -68,8 +68,10 @@ dot_plot <- function(safety,
     obj$percentage$term <- tidy_text(obj$percentage$term)
   }
   
+  n_groups=nrow(obj$GROUP)
+  
  # obj$percentage %<>% mutate(term=tidy_text(term))
-  if( valid_estimates){
+  if( valid_estimates & 1< n_groups){
     obj$relative_risk %<>% dplyr::filter(!is.na(rr))
     index <-paste(obj$percentage$soc_term,obj$percentage$term) %in%
       paste(obj$relative_risk$soc_term,obj$relative_risk$term)
@@ -91,52 +93,55 @@ dot_plot <- function(safety,
     scale_y_continuous(breaks = pretty(obj$percentage$pct)) +
     ret()
   
-  n_groups=nrow(obj$GROUP)
-  
-  title <- sort(obj$GROUP$title)
-  ref_index <- which(title==reference)
-  
-  cols <- scales::hue_pal()(n_groups)[-ref_index]
-  # set shapes
-  shps <- scales::shape_pal()(n_groups)[-ref_index]
-  names(shps) <- names(cols) <- title[ -ref_index]
   
   
-  pd <- position_dodge(0.5)
-  right.panel <- ggplot(data=obj$relative_risk,aes(x=term, y=rr, shape = group,colour=group))+
-    #geom_pointrange(data = ae_rr, aes(x=pt, y=rr, ymin=rr.LCI, ymax=rr.UCI)) +
-    geom_point( position = pd, size = 2.5)+
-    #geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
-    scale_color_manual(values=cols) +
-    scale_shape_manual(values=shps) +
-    coord_flip()+
-    scale_y_continuous(trans="log",
-                       name = paste0("Relative risk (",size,"% CI)"),
-                       breaks = scales::trans_breaks("log", function(x) base^x),
-                       labels =  scales::math_format(.x) 
-    )+
-    # scale_y_log10(name = "Relative risk (95% CI)",
-    #               breaks = scales::trans_breaks("log10", function(x) 10^x),
-    #               labels = scales::trans_format("log10", scales::math_format(10^.x)))+
-    geom_hline(yintercept = 1, linetype="dotted", color = "black", linewidth=0.5) +
-    xlab("")  +
-    ret(y.blank = T)
+  if( n_groups==1){output <- left.panel+theme(legend.position = "none")}
   
-  if(n_groups==2){
-    right.panel <- right.panel+ 
-      geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2,colour="black")
+  if( 1< n_groups){
+    title <- sort(obj$GROUP$title)
+    ref_index <- which(title==reference)
+    
+    cols <- scales::hue_pal()(n_groups)[-ref_index]
+    # set shapes
+    shps <- scales::shape_pal()(n_groups)[-ref_index]
+    names(shps) <- names(cols) <- title[ -ref_index]
+    
+    
+    pd <- position_dodge(0.5)
+    right.panel <- ggplot(data=obj$relative_risk,aes(x=term, y=rr, shape = group,colour=group))+
+      #geom_pointrange(data = ae_rr, aes(x=pt, y=rr, ymin=rr.LCI, ymax=rr.UCI)) +
+      geom_point( position = pd, size = 2.5)+
+      #geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
+      scale_color_manual(values=cols) +
+      scale_shape_manual(values=shps) +
+      coord_flip()+
+      scale_y_continuous(trans="log",
+                         name = paste0("Relative risk (",size,"% CI)"),
+                         breaks = scales::trans_breaks("log", function(x) base^x),
+                         labels =  scales::math_format(.x) 
+      )+
+      # scale_y_log10(name = "Relative risk (95% CI)",
+      #               breaks = scales::trans_breaks("log10", function(x) 10^x),
+      #               labels = scales::trans_format("log10", scales::math_format(10^.x)))+
+      geom_hline(yintercept = 1, linetype="dotted", color = "black", linewidth=0.5) +
+      xlab("")  +
+      ret(y.blank = T)
+    
+    if(n_groups==2){
+      right.panel <- right.panel+ 
+        geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2,colour="black")
     }else{
       right.panel <- right.panel+ 
         geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)  
     }
-  
-  # Version 1 pre patchwork  
-  output <- list(left.panel=left.panel, right.panel=right.panel)
-  class(output) <- c( "dot_plot")
-  #   # so you can still edit the component ggplots using standard tools
-  #   print(output)
-  #   invisible(output)
-  
+    
+    # Version 1 pre patchwork  
+    output <- list(left.panel=left.panel, right.panel=right.panel)
+    class(output) <- c( "dot_plot")
+    #   # so you can still edit the component ggplots using standard tools
+    #   print(output)
+    #   invisible(output)
+  }
   output
 }
 

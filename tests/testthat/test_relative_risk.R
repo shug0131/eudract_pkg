@@ -30,4 +30,14 @@ test_that("order filter error",
 )
 
 
+test_that("three groups",{
+  other <- safety %>% dplyr::filter(group=="Control") %>% 
+    dplyr::mutate(group="Other")
+  safety3 <- rbind(safety,other)
+  stats3 <- safety_summary(safety3, exposed=c("Experimental"=60,"Control"=67, "Other"=67))
+  relative_risk(stats3)
+  rr_tab <- relative_risk_table(stats3, type="non_serious")
+  expect_equal(ncol(rr_tab),4)
+}
+)
 

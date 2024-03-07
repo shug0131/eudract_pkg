@@ -231,3 +231,28 @@ test_that("missing values",
           }
 )
 
+
+test_that("invalid ct inputs",{
+  
+  if( is_testing()){path <- tempdir()} else{ path <- "tests/testthat"}
+  if(is_testing()){original_path <- "."}else{original_path <- "tests/testthat"}
+  safety_statistics <- safety_summary(safety, exposed=c("Experimental"=60,"Control"=67))
+  simple_safety_xml(safety_statistics, file.path(path,"simple.xml"))
+  
+  expect_error(
+    clintrials_gov_convert(input=file.path(path,"simple.xml"),
+                           original=file.path(path,"simple.xml"),
+                           output=file.path(path,"table_ct.xml")
+                           # schema_results = system.file("extdata","ProtocolRecordSchema.xsd", package="eudract")
+                           
+    ),"original study file is invalid")
+  
+  expect_error(
+    clintrials_gov_convert(input=file.path(original_path, "1234.xml"),
+                           original=file.path(original_path, "1234.xml"),
+                           output=file.path(path,"table_ct.xml")
+                           # schema_results = system.file("extdata","ProtocolRecordSchema.xsd", package="eudract")
+                           
+    )
+    ,"safety data is invalid")
+})
