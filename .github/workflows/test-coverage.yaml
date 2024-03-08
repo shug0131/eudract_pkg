@@ -6,6 +6,7 @@ on:
     types:
       - completed
     branches: [master, reporting]
+  workflow_dispatch:
   
 name: test-coverage
 
