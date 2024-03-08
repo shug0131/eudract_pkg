@@ -322,11 +322,27 @@ test_that("convert to ClinicalTrials.Gov",{
 
 test_that("check the dialogue in upload ClinicalTrials.Gov ",{
   if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
-  
-  my_askYesNo_mock= function(...){TRUE}
-  
-  local_mocked_bindings(my_askYesNo = my_askYesNo_mock)
-  
+    my_askYesNo_mock= function(...){TRUE}
+    local_mocked_bindings(askYesNo = my_askYesNo_mock)
+    output <- clintrials_gov_upload(
+      input=file.path(path, "simple.xml"),
+      backup=file.path(path,"bak_study_file.xml"),
+      output=file.path(path,"study_file.xml"),
+      orgname="AddenbrookesH",
+      check=TRUE,
+      username=Sys.getenv("ct_user"),
+      password=Sys.getenv("ct_pass"),
+      studyid="1234",
+      url="https://prstest.clinicaltrials.gov/"
+      
+    )
+    expect_equal(names(output), c("download", "upload"))
+})
+
+test_that("check the negative dialogue in upload ClinicalTrials.Gov ",{
+  if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+  my_askYesNo_mock= function(...){FALSE}
+  local_mocked_bindings(askYesNo = my_askYesNo_mock)
   output <- clintrials_gov_upload(
     input=file.path(path, "simple.xml"),
     backup=file.path(path,"bak_study_file.xml"),
@@ -339,10 +355,8 @@ test_that("check the dialogue in upload ClinicalTrials.Gov ",{
     url="https://prstest.clinicaltrials.gov/"
     
   )
-  expect_equal(names(output), c("download", "upload"))
-  
+  expect_null(output$upload)
 })
-
 
 
 
