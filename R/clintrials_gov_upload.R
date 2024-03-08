@@ -68,8 +68,8 @@ clintrials_gov_upload <- function(input, orgname, username, password, studyid,
  upload <- paste(upload, collapse="\n")
 
  if(check){
-   check_answer=utils::askYesNo(
-     paste0("This will attempt to overwrite current results in ",url,"\nDo you want to continue?")
+   check_answer=my_askYesNo(
+     msg=paste0("This will attempt to overwrite current results in ",url,"\nDo you want to continue?")
    )
  }
 
@@ -89,4 +89,9 @@ clintrials_gov_upload <- function(input, orgname, username, password, studyid,
    )
  }
  invisible(list(download=download, upload=upload_result))
+}
+
+
+my_askYesNo <- function(...){
+  utils::askYesNo(...)
 }

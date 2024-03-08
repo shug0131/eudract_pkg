@@ -14,6 +14,7 @@ devtools::document(roclets = c('rd', 'collate', 'namespace'))
 devtools::build()
 devtools::test()
 
+
 #Check you've got the right version number
 install.packages("../eudract_0.10.2.tar.gz",
                  repos = NULL, type = "source")
