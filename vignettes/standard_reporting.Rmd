@@ -1,0 +1,91 @@
+---
+title: "Standard tables and figures" 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{standard_reporting}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eudract)
+library(knitr)
+```
+
+We can easily produce some of the standard reports needed for most clinical trials, as well 
+as producing the xml files needed to upload to EudraCT or ClinicalTrials.gov. See the [other vignette](eudract.html)
+
+We first ensure the data is in the correct format, column names to produce a basic safety object
+
+```{r safety}
+head(safety)
+safety_statistics <- safety_summary(safety,exposed=c("Control"=99, "Experimental"=101))
+```
+
+A top level table is the `$GROUP` data frame with slightly improved column names
+
+```{r group}
+df <- safety_statistics$GROUP
+names(df) <- c("Arm", "SAE count", "Non Serious AE count", "Death from AE count", "N", "All cause deaths count")
+kable(df, caption = "Total Adverse Events")
+```
+
+Next we provide an incidence table
+
+```{r incidence}
+incidence <-  incidence_table(safety_statistics, type ="serious")
+kable(incidence, caption="SAE incidence")
+incidence <-  incidence_table(safety_statistics, type ="non_serious")
+kable(incidence, caption="Non-serious AE incidence")
+
+```
+
+A table of relative risk can be given
+
+```{r relative_risk}
+rr <- relative_risk_table(safety_statistics, type="serious")
+kable(rr, caption="SAE relative risks")
+
+rr <- relative_risk_table(safety_statistics, type="non_serious")
+kable(rr, caption="Non-serious AE relative risks")
+
+```
+
+Finally a set of dot-plots to show graphically and compare, using functions from [patchwork](https://patchwork.data-imaginist.com/) to add titles
+
+```{r dotplot_sae, fig.cap="SAE", fig.height=8, fig.width=8, out.width="90%"}
+dot_plot(safety_statistics, type="serious", base=4)
+```
+
+```{r dotplot_ae, fig.cap="Non-Serious AE", fig.height=8, fig.width=8, out.width="90%"}
+dot_plot(safety_statistics, type="non_serious", base=4)
+```
+
+If you want to modify, then access the two elements `$left.panel` and `$right.panel` to modify as standard `ggplot` objects. The `print` and `plot` methods glue them back together within the framework of the [patchwork](https://patchwork.data-imaginist.com/) package. Or you can dissect, edit, save, and use however you want. 
+
+```{r dotplot_edit, fig.height=8, fig.width=8, out.width="90%"}
+fig <- dot_plot(safety_statistics, type="non_serious", base=4)
+fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
+fig
+```
+
+Should you wish to save to a file, then using the workflow below will work, using a graphics device such as,  `png`, `jpeg`, `pdf`, `svg`.  You will need to explicitly call the `print(fig)` function, and just `fig` on its own may not work. 
+
+```{r dotplot_save, eval=FALSE}
+temp <- tempfile(fileext=".png")
+png(filename = temp)
+print(fig)
+dev.off()
+```
+
+Further filtering and refinements to the labels may be provided using the `relative_risk` and `order_filter` functions. See help pages for more details. 
+

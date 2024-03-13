@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 
 The goal of eudract is to provide tools to easily produce summaries of safety data from clinical trials that can easily be uploaded into eudraCT or ClinTrials.gov . 
 
+An additional feature produces commonly used tables and figures that feature in statistical reports and papers for clinical trials.
 
 
 ## Installation
@@ -45,9 +46,12 @@ devtools::install_github("shug0131/eudract_pkg")
 
 https://eudract-tool.medschl.cam.ac.uk provides full documentation
 
-Go and read the help pages within R
+Go and read the help pages within R `?eudract::safety_summary`
 
-```{r example}
-?eudract::safety_summary
+```{r example, file="example/canonical.R", eval=FALSE}
 ```
 
+And for produce standard reporting outputs
+
+```{r report_example, file="example/reporting.R"}
+```
