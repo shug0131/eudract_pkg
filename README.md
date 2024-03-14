@@ -106,4 +106,4 @@ relative_risk_table(safety_statistics, type="serious")
 dot_plot(safety_statistics, type="serious", base=4) 
 ```
 
-<img src="README_files/figure-gfm/report_example-1.png" width="100%" />
+<img src="man/figures/README-report_example-1.png" width="100%" />
