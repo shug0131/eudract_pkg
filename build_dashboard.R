@@ -24,6 +24,7 @@ devtools::build("../eudract_0.10.2.tar.gz", binary=TRUE)
 # modify news.md, cran-comments.md README.rmd
 devtools::build_readme()
 spelling::spell_check_package()
+urlchecker::url_check()
 
 devtools::check_win_release()
 rcmdcheck::rcmdcheck()
