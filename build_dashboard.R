@@ -2,7 +2,7 @@ source("ct_user_details.R")
 rcmdcheck::rcmdcheck()
 devtools::load_all()
 
-devtools::build_vignettes(clean=FALSE)
+?devtools::build_vignettes(clean=FALSE)
 devtools::clean_vignettes()
 devtools::check()
 
@@ -22,6 +22,9 @@ devtools::build("../eudract_0.10.2.tar.gz", binary=TRUE)
 
 #devtools::build( binary=TRUE)
 # modify news.md, cran-comments.md README.rmd
+devtools::build_readme()
+spelling::spell_check_package()
+
 devtools::check_win_release()
 rcmdcheck::rcmdcheck()
 devtools::check_win_devel()
