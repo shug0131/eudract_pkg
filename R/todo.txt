@@ -1,0 +1,7 @@
+one group case
+write vignette on reporting
+check on paper doc for further testing.  Or is it ready for V1 release?
+check on website
+CRAN testings
+Update Readme and news
+

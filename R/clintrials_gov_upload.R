@@ -18,6 +18,7 @@
 #' @return Invisibly returns the results from the two API with the portal \code{\link[httr]{response}}, \code{\link[httr]{POST}}  .  A new file is created as a side-effect, which is uploaded into ClinicalTrials.gov. This over-writes the original safety data online with the additional safety events. A backup copy of the original data is also saved.
 #' @seealso \code{\link{safety_summary}} \code{\link{simple_safety_xml}} [ClinicalTrials.gov manual](https://prsinfo.clinicaltrials.gov/prs-users-guide.html#section10)
 #'
+#' @importFrom utils askYesNo
 #' @export
 #' @example example/canonical.R
 
@@ -68,8 +69,8 @@ clintrials_gov_upload <- function(input, orgname, username, password, studyid,
  upload <- paste(upload, collapse="\n")
 
  if(check){
-   check_answer=utils::askYesNo(
-     paste0("This will attempt to overwrite current results in ",url,"\nDo you want to continue?")
+   check_answer=askYesNo(
+     msg=paste0("This will attempt to overwrite current results in ",url,"\nDo you want to continue?")
    )
  }
 

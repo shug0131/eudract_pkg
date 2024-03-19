@@ -231,3 +231,53 @@ test_that("missing values",
           }
 )
 
+
+test_that("invalid ct inputs",{
+  
+  if( is_testing()){path <- tempdir()} else{ path <- "tests/testthat"}
+  if(is_testing()){original_path <- "."}else{original_path <- "tests/testthat"}
+  safety_statistics <- safety_summary(safety, exposed=c("Experimental"=60,"Control"=67))
+  simple_safety_xml(safety_statistics, file.path(path,"simple.xml"))
+  
+  expect_error(
+    clintrials_gov_convert(input=file.path(path,"simple.xml"),
+                           original=file.path(path,"simple.xml"),
+                           output=file.path(path,"table_ct.xml")
+                           # schema_results = system.file("extdata","ProtocolRecordSchema.xsd", package="eudract")
+                           
+    ),"original study file is invalid")
+  
+  expect_error(
+    clintrials_gov_convert(input=file.path(original_path, "1234.xml"),
+                           original=file.path(original_path, "1234.xml"),
+                           output=file.path(path,"table_ct.xml")
+                           # schema_results = system.file("extdata","ProtocolRecordSchema.xsd", package="eudract")
+                           
+    )
+    ,"safety data is invalid")
+})
+
+
+
+## SOC=Product Issue 
+#  For this SoC,  if we use the default MedDRA version =22, then uploading to EUdraACT comes with 
+# and error " EUTCT ID [100000167503] with version [22] is non current or has never been previously used."
+
+#  So the xlst conversion step detects this SoC and changes the version to 3, which EUdract likes
+
+if(FALSE){
+df <- data.frame(
+  subjid=1:2, term="bad drug",
+  soc=10077536,
+  serious=FALSE, related=FALSE,fatal=FALSE,
+  group=c("Experimental","Control")
+)
+safety_stats <- safety_summary(df, exposed=c("Experimental"=60,"Control"=67))
+simple_safety_xml(safety_stats, file = "simple.xml")
+eudract_convert(input="simple.xml",
+                output="eudract.xml")
+}
+# upload this version (to the test site) to check it works Ok
+# manually edit line 42 of eudract.xml
+# to <version>22</version> to reproduce the error on upload.
+

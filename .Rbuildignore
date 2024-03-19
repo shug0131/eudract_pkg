@@ -13,3 +13,6 @@
 ^appveyor.yml$
 ^\.git$
 ^tests/testthat/archive$
+todo.txt
+ct_user_details.R
+^CRAN-SUBMISSION$

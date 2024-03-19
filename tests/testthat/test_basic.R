@@ -289,7 +289,7 @@ test_that("convert to eudract",{
 
 if(is_testing()){original_path <- "."}else{original_path <- "tests/testthat"}
 test_that("convert to ClinicalTrials.Gov",{
-  skip("fails due to test_that rather than actually failing")
+  #skip("fails due to test_that rather than actually failing")
  #something about a schema being referenced by another schema breaks down in test that.
    clintrials_gov_convert(input=file.path(path,"simple.xml"),
                          original=file.path(original_path, "1234.xml"),
@@ -320,6 +320,45 @@ test_that("convert to ClinicalTrials.Gov",{
 )
 
 
+test_that("check the dialogue in upload ClinicalTrials.Gov ",{
+  if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+    my_askYesNo_mock= function(...){TRUE}
+    local_mocked_bindings(askYesNo = my_askYesNo_mock)
+    output <- clintrials_gov_upload(
+      input=file.path(path, "simple.xml"),
+      backup=file.path(path,"bak_study_file.xml"),
+      output=file.path(path,"study_file.xml"),
+      orgname="AddenbrookesH",
+      check=TRUE,
+      username=Sys.getenv("ct_user"),
+      password=Sys.getenv("ct_pass"),
+      studyid="1234",
+      url="https://prstest.clinicaltrials.gov/"
+      
+    )
+    expect_equal(names(output), c("download", "upload"))
+})
+
+test_that("check the negative dialogue in upload ClinicalTrials.Gov ",{
+  if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+  my_askYesNo_mock= function(...){FALSE}
+  local_mocked_bindings(askYesNo = my_askYesNo_mock)
+  output <- clintrials_gov_upload(
+    input=file.path(path, "simple.xml"),
+    backup=file.path(path,"bak_study_file.xml"),
+    output=file.path(path,"study_file.xml"),
+    orgname="AddenbrookesH",
+    check=TRUE,
+    username=Sys.getenv("ct_user"),
+    password=Sys.getenv("ct_pass"),
+    studyid="1234",
+    url="https://prstest.clinicaltrials.gov/"
+    
+  )
+  expect_null(output$upload)
+})
+
+
 
 test_that("works for a frequency threshold",
           {
@@ -347,8 +386,19 @@ test_that("create a safety summary by hand",{
 })
 
 
+## Attempting to create an error in line 32/33 of eudract_convert.R  
+## Seems the preceding checks will always apply first. 
 
-
-
-
+# safety_statistics <- safety_summary(safety, exposed=c("Experimental"=60,"Control"=67),
+#                                     freq_threshold = 6
+#                                     )
+# simple <- tempfile(fileext = ".xml")
+# eudract <- tempfile(fileext = ".xml")
+# #safety_statistics$SERIOUS$term <- NA
+# simple_safety_xml(safety_statistics, simple)
+# eudract_convert(input=simple,
+#                 output=eudract)
+# traceback()
+# 
+# readLines(eudract)
 
