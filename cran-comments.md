@@ -1,3 +1,10 @@
+## Change July 
+
+Minor bug fixes for relative_risk and dot_plot when the reference group is changed.
+
+The website is still down, so the url is modified. 
+
+
 ## Change Mar 2024
 
 Added extra functionality for reporting

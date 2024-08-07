@@ -8,10 +8,11 @@ min_pct <- rr2$percentage %>% group_by(term) %>%
   summarise( pct=max(pct)) %>% dplyr::pull(pct) %>% min
 
 test_that("relative risk object",{
-  expect_equal(length(rr),3)
+  expect_equal(length(rr),4)
   expect_s3_class(rr$relative_risk,"data.frame")
   expect_s3_class(rr$percentage,"data.frame")
   expect_s3_class(rr$GROUP,"data.frame")
+  expect_type(rr$reference,"character")
   expect_gt(min_pct, 2)
 } )
 
