@@ -6,3 +6,5 @@ tests/testthat/not_test_selenium.R
 /doc/
 /Meta/
 ct_user_details.R
+build_dashboard.R
+
