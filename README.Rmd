@@ -45,7 +45,7 @@ devtools::install_github("shug0131/eudract_pkg")
 
 ## Documentation
 
-https://eudract-tool.medschl.cam.ac.uk provides full documentation
+https://shug0131.github.io/eudraCT/ provides full documentation
 
 Go and read the help pages within R `?eudract::safety_summary`
 

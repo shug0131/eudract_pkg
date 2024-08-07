@@ -36,7 +36,7 @@ devtools::install_github("shug0131/eudract_pkg")
 
 ## Documentation
 
-<https://eudract-tool.medschl.cam.ac.uk> provides full documentation
+<https://shug0131.github.io/eudraCT/> provides full documentation
 
 Go and read the help pages within R `?eudract::safety_summary`
 
@@ -81,6 +81,9 @@ safety_statistics$GROUP
 #>   subjectsExposed deathsAllCauses
 #> 1              99               9
 #> 2             101              22
+```
+
+``` r
 head( incidence_table(safety_statistics, type="serious")  )
 #>                     System Organ Class               Preferred Term
 #> 1 Blood and lymphatic system disorders              B-cell lymphoma
@@ -96,6 +99,9 @@ head( incidence_table(safety_statistics, type="serious")  )
 #> 4        1% (1, 1)              0% (0, 0)
 #> 5        0% (0, 0)              1% (1, 1)
 #> 6        0% (0, 0)              1% (1, 1)
+```
+
+``` r
 relative_risk_table(safety_statistics, type="serious") 
 #>                System Organ Class       Preferred Term Relative Risk (C.I.)
 #> 1         Hepatobiliary disorders  Cholecystitis acute  0.98 (0.0605, 15.9)
@@ -103,6 +109,9 @@ relative_risk_table(safety_statistics, type="serious")
 #> 3 Surgical and medical procedures     Hip arthroplasty     1.96 (0.175, 22)
 #> 4              Vascular disorders Deep vein thrombosis   2.94 (0.301, 28.8)
 #> 5                                   Pulmonary embolism  0.98 (0.0605, 15.9)
+```
+
+``` r
 dot_plot(safety_statistics, type="serious", base=4) 
 ```
 
