@@ -1,3 +1,13 @@
+# eudract 1.0.1
+
+Fixing a bug when a relative_risk object was passed into dot_plot and the reference
+group is changed from the default. 
+
+# eudract 1.0.0
+
+Adding extra functionality to provide standard reports and dot plot figures
+
+
 # eudract v0.10.2
 
 modifying contact details

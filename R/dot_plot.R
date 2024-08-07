@@ -48,6 +48,10 @@ dot_plot <- function(safety,
   }
   if( inherits(safety,"relative_risk")){
    obj <- safety 
+   if( obj$reference!=reference){
+     warning(paste( "The reference group is taken from the relative_risk input: ",obj$reference))
+     reference <- obj$reference
+    }
   }
   if( !inherits(safety, c("safety_summary","relative_risk"))){
    stop("invalid input: needs to be either safety_summary or relative_risk object") 

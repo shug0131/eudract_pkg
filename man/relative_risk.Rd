@@ -45,8 +45,13 @@ The alternative is to include terms with zeroes.}
 \item{threshold}{a threshold on the percent scale, the max percentage for a term the incidence rate needs to exceed}
 }
 \value{
-\code{relative_risk} returns of list of three items. "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
-"percentage" a data.frame with absolute percentages. "GROUP" a copy from the original \code{safety_summary} object.
+\code{relative_risk} returns of list of four items. 
+\itemize{
+\item "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
+\item "percentage" a data.frame with absolute percentages. 
+\item "GROUP" a copy from the original \code{safety_summary} object.
+\item "reference" naming the reference group used to calculate relative risks
+}
 No adjustment made to deal with zeroes. This is suitable input for the \code{dot_plot} function, and in most cases will not be 
 used directly, but may potentially be modified with filtration, or editing of terms, see \code{order_filter}.
 
