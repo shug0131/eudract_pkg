@@ -114,8 +114,8 @@ We can validate the output against the XML schemas provided by EudraCT and CT.go
 `eudract_convert()` and `clintrials_gov_convert()` also do this behind the scenes, returning the value `TRUE` if there are no errors against the schema validation. 
 
 * [eudract schema](https://eudract.ema.europa.eu/docs/technical/schemas/clinicaltrial/results/adverseEvents.xsd), was downloaded to this package on 15NOV2016
-* [CT.gov overall xml schema](https://prsinfo.clinicaltrials.gov/ProtocolRecordSchema.xsd), was downloaded to this package on 29JUL2021
-* [CT.gov results xml schema](https://prsinfo.clinicaltrials.gov/RRSUploadSchema.xsd), was downloaded to this package on 31MAR2021
+* [CT.gov overall xml schema](https://cdn.clinicaltrials.gov/documents/xsd/prs/ProtocolRecordSchema.xsd), was downloaded to this package on 29JUL2021
+* [CT.gov results xml schema](https://cdn.clinicaltrials.gov/documents/xsd/prs/RRSUploadSchema.xsd), was downloaded to this package on 31MAR2021
 
 
 note these  are semi-readable files of code/data rather than a standard web page.
