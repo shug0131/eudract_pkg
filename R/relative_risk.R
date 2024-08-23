@@ -7,8 +7,13 @@
 #' @param size a number between 0-100, giving the size of the confidence interval. 
 #' Default is 95.
 
-#' @return \code{relative_risk} returns of list of three items. "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
-#' "percentage" a data.frame with absolute percentages. "GROUP" a copy from the original \code{safety_summary} object.
+#' @return \code{relative_risk} returns of list of four items. 
+#' \itemize{
+#' \item "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
+#' \item "percentage" a data.frame with absolute percentages. 
+#' \item "GROUP" a copy from the original \code{safety_summary} object.
+#' \item "reference" naming the reference group used to calculate relative risks
+#' }
 #' No adjustment made to deal with zeroes. This is suitable input for the \code{dot_plot} function, and in most cases will not be 
 #' used directly, but may potentially be modified with filtration, or editing of terms, see \code{order_filter}.
 #' @seealso  \code{\link{safety_summary}} \code{\link{dot_plot}}
@@ -74,7 +79,8 @@ relative_risk <- function(safety,
   
   output <- list("relative_risk"=rr %>% as.data.frame,
        "percentage"=df %>% as.data.frame,
-       "GROUP"=safety$GROUP
+       "GROUP"=safety$GROUP,
+       "reference"=reference
        )
   class(output) <- "relative_risk"
   output

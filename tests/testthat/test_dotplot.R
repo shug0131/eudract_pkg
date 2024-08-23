@@ -15,6 +15,9 @@ print(fig)
 plot(fig)
 
 
+
+
+
 save_ps <- function(fig){
   temp <- tempfile(fileext=".ps")
   postscript(file = temp, onefile = TRUE)
@@ -41,6 +44,20 @@ if(FALSE){
   dev.off()
   
 }
+
+
+test_that("Checking for changing the reference group",{
+   local_edition(3)
+  fig_ref <- dot_plot(safety_statistics, type="non_serious", base=4, reference="Experimental")
+  fig_ref
+  vdiffr::expect_doppelganger("dotplot_ref", fig_ref)
+  # using rr
+  rr <- relative_risk(safety_statistics, reference="Experimental")
+  expect_warning(fig_ref_rr <- dot_plot(rr), "The reference group")
+  fig_ref_rr
+  vdiffr::expect_doppelganger("dotplot_ref_rr", fig_ref_rr)
+  
+})
 
 test_that("warnings for repeated terms",
           {
