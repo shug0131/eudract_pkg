@@ -221,7 +221,7 @@ df_to_char <- function(df){
 #' @importFrom utils head
 
 print.safety_summary <- function(x,...){
-  old_scipen <- options("scipen")
+  old_scipen <- getOption("scipen", default=0)
   on.exit( options(scipen=old_scipen))
   options(scipen=999)
   cat("Group-Level Statistics\n\n")
