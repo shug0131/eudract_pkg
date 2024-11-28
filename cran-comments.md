@@ -1,3 +1,8 @@
+## Change Nov 24
+
+Update to print.summary_statistics() on how options() reset is delivered. To fix errors on CRAN checks
+
+
 ## Change July 
 
 Minor bug fixes for relative_risk and dot_plot when the reference group is changed.

@@ -1,3 +1,7 @@
+# eudract 1.0.2
+
+Update to print.summary_statistics() on how options() reset is delivered. To fix errors on CRAN checks
+
 # eudract 1.0.1
 
 Fixing a bug when a relative_risk object was passed into dot_plot and the reference
