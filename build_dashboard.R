@@ -39,3 +39,5 @@ devtools::submit_cran()
 #Add the .9000 suffix to the Version field in the DESCRIPTION to
 #indicate that this is a development version.
 #Create a new heading in NEWS.md and commit the changes.
+
+# on parent repo:  git submodule update --remote
