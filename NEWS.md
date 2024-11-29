@@ -1,3 +1,6 @@
+# Placeholder for next version
+
+
 # eudract 1.0.2
 
 Update to print.summary_statistics() on how options() reset is delivered. To fix errors on CRAN checks
