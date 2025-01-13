@@ -1,9 +1,8 @@
-# Placeholder for next version
-
-
 # eudract 1.0.2
 
-Update to print.summary_statistics() on how options() reset is delivered. To fix errors on CRAN checks
+Evading a windows bug whereby a call to xml2::xml_validate() crashes the system. 
+The checks are not run if the OS is windows. 
+
 
 # eudract 1.0.1
 

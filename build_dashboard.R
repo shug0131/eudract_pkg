@@ -4,7 +4,8 @@ devtools::load_all()
 
 ?devtools::build_vignettes(clean=FALSE)
 devtools::clean_vignettes()
-devtools::check()
+devtoolss::install_deps(dependencies=TRUE)
+devtools::check(remote=TRUE, manual=TRUE)
 
 
 #.libPaths("U:/My Documents/R/win-library/4.1")
