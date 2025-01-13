@@ -1,3 +1,9 @@
+# eudract 1.0.2
+
+Evading a windows bug whereby a call to xml2::xml_validate() crashes the system. 
+The checks are not run if the OS is windows. 
+
+
 # eudract 1.0.1
 
 Fixing a bug when a relative_risk object was passed into dot_plot and the reference
