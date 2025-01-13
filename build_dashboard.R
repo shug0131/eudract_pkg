@@ -32,6 +32,7 @@ rcmdcheck::rcmdcheck()
 devtools::check_win_devel()
 #devtools::check_rhub()
 rhub::rhub_check()
+# Go to actions in github and manually run the rhub one. 
 #check github is totally up to date
 devtools::release()
 devtools::submit_cran()
