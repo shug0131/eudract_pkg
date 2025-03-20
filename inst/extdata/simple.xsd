@@ -164,19 +164,11 @@ elementFormDefault="unqualified">
 
   <xs:element name="TABLE">
     <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
-        <xs:sequence>
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="NON_SERIOUS" type="non_serious_type" />
-            <xs:element name="SERIOUS" type="serious_type" />
-          </xs:choice>
-          <xs:element name="GROUP" type="group_type" minOccurs="1"/>
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="NON_SERIOUS" type="non_serious_type" />
-            <xs:element name="SERIOUS" type="serious_type" />
-          </xs:choice>
-        </xs:sequence>
-      </xs:choice>
+       <xs:sequence>
+          <xs:element name="GROUP" type="group_type" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="NON_SERIOUS" type="non_serious_type" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="SERIOUS" type="serious_type"  minOccurs="0" maxOccurs="unbounded"/>
+       </xs:sequence>
     </xs:complexType>
 
     <xs:key name="ref_groups">

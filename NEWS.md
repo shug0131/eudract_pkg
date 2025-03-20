@@ -1,3 +1,7 @@
+# eudract 1.0.4
+
+Correction to an overly-complex xml schema. 
+
 # eudract 1.0.2
 
 Evading a windows bug whereby a call to xml2::xml_validate() crashes the system. 
