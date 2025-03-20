@@ -1,3 +1,7 @@
+## Change Mar 25
+
+Simplified schema file to pass CRAN tests
+
 ## Change Nov 24
 
 Update to print.summary_statistics() on how options() reset is delivered. To fix errors on CRAN checks
