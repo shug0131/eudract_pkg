@@ -60,7 +60,7 @@ clintrials_gov_convert <- function(input, original, output,
   
   message(paste0("'",output, "' is created or modified\n"))
   #check against the output schema
-  check_out <- ( Sys.info()["sysname"]=="Windows") || xml2::xml_validate(safety, schema_results)
+  check_out <- xml2::xml_validate(safety, schema_results) #( Sys.info()["sysname"]=="Windows") || 
   if( !check_out){ warning(attr(check_out,"errors"))}
   check_out <-  xml2::xml_validate(original, schema_output)
   if( !check_out){ warning(attr(check_out,"errors"))}
