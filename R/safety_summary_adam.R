@@ -22,7 +22,7 @@
 #' 
 safety_summary_adam <- function(adsl, adae, freq_threshold = 0,
                                 na.action = na.fail, 
-                                related_terms = c("POSSIBLE","PROBABLE","DEFINITELY")
+                                related_terms = c("POSSIBLE","PROBABLE","DEFINITELY","Y")
                                 ){
   
   #table of exposed
