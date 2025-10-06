@@ -9,7 +9,7 @@ safety_summary_adam(
   adae,
   freq_threshold = 0,
   na.action = na.fail,
-  related_terms = c("POSSIBLE", "PROBABLE", "DEFINITELY")
+  related_terms = c("POSSIBLE", "PROBABLE", "DEFINITELY", "Y")
 )
 }
 \arguments{
