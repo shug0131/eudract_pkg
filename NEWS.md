@@ -1,3 +1,8 @@
+# eudract 1.0.5
+
+Bug corrected in order_filter when more than 2 arms present. 
+
+
 # eudract 1.0.4
 
 Correction to an overly-complex xml schema. 
