@@ -1,3 +1,8 @@
+## change Oct 25
+
+bug fix for order_filter when more than 2 arms
+
+
 ## Change Mar 25
 
 Simplified schema file to pass CRAN tests
