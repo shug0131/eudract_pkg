@@ -148,12 +148,16 @@ order_filter <- function(rel_risk,threshold=10){
   
   rr2 <- rel_risk$relative_risk %>% 
     mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  index <- order(rr2$rr)
   
-  rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
+   rr3 <- rr2 |> group_by(term) |> 
+    summarise(rr= mean(rr, na.rm=TRUE))
+  
+  index <- order(rr3$rr)
+  
+  rr2$term <- factor(rr2$term,levels = rr3$term[index], ordered = TRUE)
   pct2 <- rel_risk$percentage%>% 
     mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
+  pct2$term <- factor(pct2$term,levels = rr3$term[index], ordered = TRUE)
   
   rel_risk_ord <- rel_risk
   rel_risk_ord$relative_risk <- rr2

@@ -31,7 +31,10 @@ devtools::check_win_release()
 rcmdcheck::rcmdcheck()
 devtools::check_win_devel()
 #devtools::check_rhub()
+#usethis::create_github_token()
+#gitcreds::gitcreds_set()
 rhub::rhub_check()
+# Go to actions in github and manually run the rhub one. 
 #check github is totally up to date
 devtools::release()
 devtools::submit_cran()
