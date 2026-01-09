@@ -60,7 +60,7 @@ cat(out[(headfoot[1] + 1):(headfoot[2] - 1)], sep = "\n")
 
 ### ADaM format
 
-A pair of example data sets are taken from the [pharmaverseadam](https://doi.org/10.32614/CRAN.package.pharmaverseadam) package. Specifically the individual  subject-level data `pharmaverseadam::adsl`  and adverse event data `pharmaverseadam::adae`. The adverse event data is readily convertable to the original format data, just with different variable names. The subject level data is used to internally calculate the numbers exposed, and excess deaths not included in the adverse event data. 
+A pair of example data sets are taken from the [pharmaverseadam](https://doi.org/10.32614/CRAN.package.pharmaverseadam) package. Specifically the individual  subject-level data `pharmaverseadam::adsl`  and adverse event data `pharmaverseadam::adae`. The adverse event data is readily convertible to the original format data, just with different variable names. The subject level data is used to internally calculate the numbers exposed, and excess deaths not included in the adverse event data. 
 
 ## Calculate Summary Statistics
 

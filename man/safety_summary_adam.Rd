@@ -21,13 +21,19 @@ safety_summary_adam(
 
 \item{na.action}{a function that indicates what should happen if the data contain missing values. The default is \code{\link{na.fail}}  as both repositories will not accept any missing values in the upload. Alternatives could be \code{\link{na.omit}}, \code{\link{na.exclude}}, or \code{\link{na.pass}}.}
 
-\item{related_terms}{The set of terms used in adae$AEREL to identify related events.}
+\item{related_terms}{The set of terms used in \code{adae$AEREL} to identify related events.}
 }
 \value{
 a list of three data frames: GROUP, SERIOUS, NON_SERIOUS. Each contains the summary statistics required by EudraCT, and is suitable for export.
 }
 \description{
 Calculate frequency tables based on ADaM data.
+}
+\details{
+It is worth highlighting that the CDISC standards need to be followed. 
+There must be an \code{ARM} variable in the \code{adsl} data. 
+Screen failures must be filtered out.  It is up to the user to manipulate the 
+input data as required.
 }
 \examples{
 

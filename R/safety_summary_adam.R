@@ -3,9 +3,15 @@
 #' @param adsl ADaM Subject-level analysis data set
 #' @param adae ADaM Adverse Event data set
 #' @inheritParams safety_summary
-#' @param related_terms The set of terms used in adae$AEREL to identify related events.
+#' @param related_terms The set of terms used in \code{adae$AEREL} to identify related events.
 #'
 #' @returns a list of three data frames: GROUP, SERIOUS, NON_SERIOUS. Each contains the summary statistics required by EudraCT, and is suitable for export.
+#'
+#' @details It is worth highlighting that the CDISC standards need to be followed. 
+#' There must be an \code{ARM} variable in the \code{adsl} data. 
+#' Screen failures must be filtered out.  It is up to the user to manipulate the 
+#' input data as required. 
+#' 
 #'
 #' @seealso \code{\link{safety_summary }} \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
 #'
