@@ -38,6 +38,16 @@ deathsExternal <- c("Control"=3,"Experimental"=5)
 Coded adverse events are required to be helpful and avoid the task of reconciling minor spelling or text inconsistencies. This package and vignette assumes this is the case, and will not work in the absence of coding. We cannot provide the full MedDRA dictionary, due to copy right reasons. But normally this is available to sponsors. However, for upload into EudraCT, as a minimal requirement, only the System Organ Class (SOC) needs to be fully coded into the EudraCT internal version coding system. We have provided an internal data set, derived from the [eutct site](http://eutct.ema.europa.eu/eutct/viewListDisplay.do?listId=100000000006&firstTime=true&d-5037238-p=1&d-5037238-n=1&d-5037238-o=1&d-5037238-s=termName) in the package to use this; see `?soc_code`.
 
 ## Safety data set
+
+There are two possible formats for inputting the safety data
+
+* The package's original data format with an ad hoc choice of variable names
+* Using [ADaM](https://www.cdisc.org/standards/foundational/adam) formats from the [CDISC](https://www.cdisc.org/) standards
+
+### Original Format
+
+A sample data set with the required fields is included.
+
 ```{r input, echo=FALSE, results="asis"}
 library(eudract)
 file <- utils:::.getHelpFile(help("safety"))
@@ -48,9 +58,15 @@ headfoot <- grep("body", out)
 cat(out[(headfoot[1] + 1):(headfoot[2] - 1)], sep = "\n")
 ```
 
+### ADaM format
+
+A pair of example data sets are taken from the [pharmaverseadam](https://doi.org/10.32614/CRAN.package.pharmaverseadam) package. Specifically the individual  subject-level data `pharmaverseadam::adsl`  and adverse event data `pharmaverseadam::adae`. The adverse event data is readily convertible to the original format data, just with different variable names. The subject level data is used to internally calculate the numbers exposed, and excess deaths not included in the adverse event data. 
+
 ## Calculate Summary Statistics
 
 We provide a function that derives the patient and event counts as required in a format internal to R.
+
+### Original Data Format
 
 ```{r counting}
 safety_statistics <- safety_summary(safety, 
@@ -59,6 +75,22 @@ safety_statistics <- safety_summary(safety,
                                     freq_threshold = 1
                                     )
 safety_statistics
+```
+
+### ADaM data format
+
+The same arguments for `freq_trheshold` and   `na.action` are used. The `excess_deaths` and `exposed` are internally calculated and so not needed. The ADaM data has a text field `AEREL` that is unconstrained, so we can provide an argument `related_terms` that gives the set of terms used to identify related events; the default is `c("POSSIBLE","PROBABLE","DEFINITELY"))` .
+
+```{r adam_counting}
+library(pharmaverseadam)
+library(dplyr)
+data("adsl")
+data("adae")
+
+safety_statistics_adam <- safety_summary_adam(
+  adsl |> filter(ARM != "Screen Failure"),
+  adae)
+safety_statistics_adam 
 ```
 
 ## Convert to XML
@@ -103,11 +135,10 @@ clintrials_gov_upload(
 # Output
 
 
-
 The key outputs are 
 
-* [safety_upload.xml](../extdata/safety_upload.xml), for eudraCT 
-* [ct_safety_upload.xml](../extdata/ct_safety_upload.xml) for CT.gov
+* [safety_upload.xml](../doc/safety_upload.xml), for eudraCT 
+* [ct_safety_upload.xml](../doc/ct_safety_upload.xml) for CT.gov
 
 
 We can validate the output against the XML schemas provided by EudraCT and CT.gov, although the calls to 
@@ -136,7 +167,7 @@ if(check){print("Validation against CT.gov schema has passed!")}
 
 # Manual Upload
 
-To use the resulting eudraCT xml file navigate and log in online to the study specific area of the EudraCT site. On the top banner is a link "Upload XML" which you follow. Choose the option "Adverse Events" rather than "Full data set", and select the file xml you have produced. The resulting information can be viewed in the browser interactively or with a static [pdf file](../extdata/ct_result_0004-000245-38.pdf) (note this is a fictitious study and fictitious data). This is not the only step in completing the EudraCT report, as the description of the study, baseline characteristics and efficacy analysis will all need to be added. That is not the remit of this package though.
+To use the resulting eudraCT xml file navigate and log in online to the study specific area of the EudraCT site. On the top banner is a link "Upload XML" which you follow. Choose the option "Adverse Events" rather than "Full data set", and select the file xml you have produced. The resulting information can be viewed in the browser interactively or with a static [pdf file](../doc/ct_result_0004-000245-38.pdf) (note this is a fictitious study and fictitious data). This is not the only step in completing the EudraCT report, as the description of the study, baseline characteristics and efficacy analysis will all need to be added. That is not the remit of this package though.
 
 For the ClinicalTrials.gov, once logged in, there is a button titled "Records", near the top. From there select "Upload Record (XML)". On the new page, use the "Choose File" button to select the newly created XML file, and click "Upload".
 

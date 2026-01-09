@@ -15,7 +15,8 @@ simple_safety_xml(
 
 \item{file}{a character string name the file to be created}
 
-\item{schema}{a character string giving the file path to the schema for the outputxml file. Defaults to the schema provided in this package.}
+\item{schema}{a character string giving the file path to the schema for the output
+xml file. Defaults to the schema provided in this package.}
 }
 \value{
 no output is returned, but a file is created as a side-effect.

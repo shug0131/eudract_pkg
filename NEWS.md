@@ -1,7 +1,13 @@
+
+
+# eudract 1.1.0
+
+Extra function, safety_summary_adam(), provided to accept input from two 
+CDISC/ADaM standard data sets. Packages will be incorporated within the PharmaVerse network.
+
 # eudract 1.0.5
 
 Bug corrected in order_filter when more than 2 arms present. 
-
 
 # eudract 1.0.4
 
