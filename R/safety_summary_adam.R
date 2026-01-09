@@ -13,7 +13,7 @@
 #' input data as required. 
 #' 
 #'
-#' @seealso \code{\link{safety_summary }} \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
+#' @seealso \code{\link{safety_summary}} \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
 #'
 #'
 #' @export

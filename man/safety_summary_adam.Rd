@@ -44,5 +44,5 @@ safety_summary_adam(
 
 }
 \seealso{
-\code{\link{safety_summary }} \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
+\code{\link{safety_summary}} \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
 }
