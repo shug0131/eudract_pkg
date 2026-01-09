@@ -1,3 +1,4 @@
 source("renv/activate.R")
-.libPaths("U:/My Documents/R/win-library/4.1")
+options(repos=Sys.getenv("CRAN"))
+#.libPaths("U:/My Documents/R/win-library/4.1")
 

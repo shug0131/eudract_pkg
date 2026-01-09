@@ -135,11 +135,10 @@ clintrials_gov_upload(
 # Output
 
 
-
 The key outputs are 
 
-* [safety_upload.xml](../extdata/safety_upload.xml), for eudraCT 
-* [ct_safety_upload.xml](../extdata/ct_safety_upload.xml) for CT.gov
+* [safety_upload.xml](../doc/safety_upload.xml), for eudraCT 
+* [ct_safety_upload.xml](../doc/ct_safety_upload.xml) for CT.gov
 
 
 We can validate the output against the XML schemas provided by EudraCT and CT.gov, although the calls to 
@@ -168,7 +167,7 @@ if(check){print("Validation against CT.gov schema has passed!")}
 
 # Manual Upload
 
-To use the resulting eudraCT xml file navigate and log in online to the study specific area of the EudraCT site. On the top banner is a link "Upload XML" which you follow. Choose the option "Adverse Events" rather than "Full data set", and select the file xml you have produced. The resulting information can be viewed in the browser interactively or with a static [pdf file](../extdata/ct_result_0004-000245-38.pdf) (note this is a fictitious study and fictitious data). This is not the only step in completing the EudraCT report, as the description of the study, baseline characteristics and efficacy analysis will all need to be added. That is not the remit of this package though.
+To use the resulting eudraCT xml file navigate and log in online to the study specific area of the EudraCT site. On the top banner is a link "Upload XML" which you follow. Choose the option "Adverse Events" rather than "Full data set", and select the file xml you have produced. The resulting information can be viewed in the browser interactively or with a static [pdf file](../doc/ct_result_0004-000245-38.pdf) (note this is a fictitious study and fictitious data). This is not the only step in completing the EudraCT report, as the description of the study, baseline characteristics and efficacy analysis will all need to be added. That is not the remit of this package though.
 
 For the ClinicalTrials.gov, once logged in, there is a button titled "Records", near the top. From there select "Upload Record (XML)". On the new page, use the "Choose File" button to select the newly created XML file, and click "Upload".
 

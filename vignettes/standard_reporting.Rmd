@@ -2,7 +2,7 @@
 title: "Standard tables and figures" 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{standard_reporting}
+  %\VignetteIndexEntry{Standard tables and figures}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
