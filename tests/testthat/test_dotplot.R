@@ -79,7 +79,7 @@ test_that("relative risk object as input",{
   #fig2 <- ggplot(mapping=aes(x=x,y=y), data=data.frame(x=1,y=1))+geom_point()
   ## This is bending the rules.  I want this to  compare to the reference output
   ## that was create for line 35 above,  by using the same title "dotplot"
-  vdiffr::expect_doppelganger("dotplot", fig2)
+  vdiffr::expect_doppelganger("dotplot_non_serious", fig2)
   }
 )
 

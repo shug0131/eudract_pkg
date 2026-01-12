@@ -2,7 +2,8 @@
 #'
 #' @param x an object of class \code{safety_summary}, as created by \code{\link{safety_summary}}.
 #' @param file a character string name the file to be created
-#' @param schema a character string giving the file path to the schema for the outputxml file. Defaults to the schema provided in this package.
+#' @param schema a character string giving the file path to the schema for the output
+#' xml file. Defaults to the schema provided in this package.
 #'
 #' @return no output is returned, but a file is created as a side-effect.
 #' @seealso \code{\link{eudract_convert}} \code{\link{safety_summary}}
