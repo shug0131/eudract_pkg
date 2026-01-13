@@ -34,5 +34,6 @@ jobs:
       - name: Build Vignettes
         run: |
           devtools::load_all(".")
+          renv::status()
           devtools::build_vignettes()
         shell: Rscript {0}
