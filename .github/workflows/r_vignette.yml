@@ -29,8 +29,8 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
-          with:
-            extra-packages: devtools
+        with:
+          extra-packages: devtools
       - name: Build Vignettes
         run: |
           devtools::load_all(".")
