@@ -8,7 +8,9 @@
 
 name: R vignette on mac
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    branches: [master, dev]
   
 permissions:
   contents: read
@@ -26,10 +28,9 @@ jobs:
           r-version: release
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck","devtools"))
-          remotes::install_deps(dependencies = TRUE)
+          install.packages("devtools")
         shell: Rscript {0}
-      - name: Check
+      - name: Build Vignettes
         run: |
           devtools::load_all(".")
           devtools::build_vignettes()
