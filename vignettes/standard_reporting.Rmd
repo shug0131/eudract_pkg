@@ -63,13 +63,11 @@ kable(rr, caption="Non-serious AE relative risks")
 Finally a set of dot-plots to show graphically and compare, using functions from [patchwork](https://patchwork.data-imaginist.com/) to add titles
 
 ```{r dotplot_sae, fig.cap="SAE", fig.height=8, fig.width=8, out.width="90%"}
-fig <- dot_plot(safety_statistics, type="serious", base=4)
-fig
+dot_plot(safety_statistics, type="serious", base=4)
 ```
 
 ```{r dotplot_ae, fig.cap="Non-Serious AE", fig.height=8, fig.width=8, out.width="90%"}
-fig <- dot_plot(safety_statistics, type="non_serious", base=4)
-fig
+dot_plot(safety_statistics, type="non_serious", base=4)
 ```
 
 If you want to modify, then access the two elements `$left.panel` and `$right.panel` to modify as standard `ggplot` objects. The `print` and `plot` methods glue them back together within the framework of the [patchwork](https://patchwork.data-imaginist.com/) package. Or you can dissect, edit, save, and use however you want. 
