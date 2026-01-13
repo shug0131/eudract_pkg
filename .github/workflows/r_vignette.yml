@@ -21,7 +21,7 @@ jobs:
     
 
     steps:
-        run: brew install --cask xquartz
+      - run: brew install --cask xquartz
       - uses: actions/checkout@v4
       - name: Set up R 
         uses: r-lib/actions/setup-r@v2
