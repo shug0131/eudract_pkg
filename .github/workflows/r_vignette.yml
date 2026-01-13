@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: devtools
+          extra-packages: devtools, cpp11
       - name: Build Vignettes
         run: |
           devtools::load_all(".")
