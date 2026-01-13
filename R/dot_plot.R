@@ -11,7 +11,6 @@
 #' 
 #' @export
 #' @importFrom dplyr left_join mutate select arrange
-#' @importFrom magrittr %>%
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
 #' @importFrom patchwork plot_layout
 #' 
@@ -57,7 +56,7 @@ dot_plot <- function(safety,
    stop("invalid input: needs to be either safety_summary or relative_risk object") 
   }
   
-  obj$relative_risk %<>% 
+  obj$relative_risk <- obj$relative_risk |> 
     mutate(
       #term=tidy_text(term),
       rr=ifelse(is.infinite(rr),NA, rr),
@@ -76,7 +75,7 @@ dot_plot <- function(safety,
   
  # obj$percentage %<>% mutate(term=tidy_text(term))
   if( valid_estimates & 1< n_groups){
-    obj$relative_risk %<>% dplyr::filter(!is.na(rr))
+    obj$relative_risk <- obj$relative_risk |> dplyr::filter(!is.na(rr))
     index <-paste(obj$percentage$soc_term,obj$percentage$term) %in%
       paste(obj$relative_risk$soc_term,obj$relative_risk$term)
     obj$percentage <- obj$percentage[index,]
