@@ -35,5 +35,5 @@ jobs:
         run: |
           devtools::load_all(".")
           renv::status()
-          devtools::build_vignettes()
+          rmarkdown::render("vignettes/standard_reporting.Rmd")
         shell: Rscript {0}
