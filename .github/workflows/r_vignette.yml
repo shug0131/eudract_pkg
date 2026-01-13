@@ -28,9 +28,9 @@ jobs:
           r-version: release
       - uses: r-lib/actions/setup-renv@v2
       - name: Install dependencies
-        run: |
-          renv::install("devtools")
-        shell: Rscript {0}
+        uses: r-lib/actions/setup-r-dependencies@v2
+          with:
+            extra-packages: devtools
       - name: Build Vignettes
         run: |
           devtools::load_all(".")
