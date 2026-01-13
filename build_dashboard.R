@@ -28,6 +28,7 @@ spelling::spell_check_package()
 urlchecker::url_check()
 
 devtools::check_win_release()
+devtools::check_mac_release()
 rcmdcheck::rcmdcheck()
 devtools::check_win_devel()
 #devtools::check_rhub()
