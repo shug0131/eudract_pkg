@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+generate_image <- Sys.info()["sysname"] != "Darwin"
+copy_image <- !generate_image
+
 ```
 
 ```{r setup}
@@ -62,33 +65,32 @@ kable(rr, caption="Non-serious AE relative risks")
 
 Finally a set of dot-plots to show graphically and compare, using functions from [patchwork](https://patchwork.data-imaginist.com/) to add titles
 
-```{r dotplot_sae, fig.cap="SAE", fig.height=8, fig.width=8, out.width="90%",eval=FALSE}
+```{r dotplot_sae, fig.cap="SAE", fig.height=8, fig.width=8, out.width="90%", eval=generate_image}
 dot_plot(safety_statistics, type="serious", base=4)
 ```
 
-```{r out.width = '80%', echo = FALSE}
+```{r out.width = '80%', echo = FALSE, eval= copy_image}
 knitr::include_graphics("img/dotplot_sae-1.png")
 ```
 
 
-```{r dotplot_ae, fig.cap="Non-Serious AE", fig.height=8, fig.width=8,
-out.width="90%", eval=FALSE}
+```{r dotplot_ae, fig.cap="Non-Serious AE", fig.height=8, fig.width=8,out.width="90%", eval=generate_image}
 dot_plot(safety_statistics, type="non_serious", base=4)
 ```
 
-```{r out.width = '80%', echo = FALSE}
+```{r out.width = '80%', echo = FALSE, eval= copy_image}
 knitr::include_graphics("img/dotplot_ae-1.png")
 ```
 
 If you want to modify, then access the two elements `$left.panel` and `$right.panel` to modify as standard `ggplot` objects. The `print` and `plot` methods glue them back together within the framework of the [patchwork](https://patchwork.data-imaginist.com/) package. Or you can dissect, edit, save, and use however you want. 
 
-```{r dotplot_edit, fig.height=8, fig.width=8, out.width="90%", eval=FALSE}
+```{r dotplot_edit, fig.height=8, fig.width=8, out.width="90%", eval=generate_image}
 fig <- dot_plot(safety_statistics, type="non_serious", base=4)
 fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
 fig
 ```
 
-```{r out.width = '80%', echo = FALSE}
+```{r out.width = '80%', echo = FALSE, eval= copy_image}
 knitr::include_graphics("img/dotplot_edit-1.png")
 ```
 

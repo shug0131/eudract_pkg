@@ -1,3 +1,9 @@
+## Change Jan 26
+
+Conditionally escaping from xml2 bug on Mac to fix Errors in cran checks.
+
+
+
 ## change Oct 25
 
 bug fix for order_filter when more than 2 arms
