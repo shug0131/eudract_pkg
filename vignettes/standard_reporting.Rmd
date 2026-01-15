@@ -51,7 +51,7 @@ kable(incidence, caption="Non-serious AE incidence")
 
 A table of relative risk can be given
 
-```{r relative_risk, eval=FALSE}
+```{r relative_risk}
 rr <- relative_risk_table(safety_statistics, type="serious")
 kable(rr, caption="SAE relative risks")
 
