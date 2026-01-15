@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
     branches: [master, dev]
   
-permissions:
-  contents: read
+permissions: write-all
+ 
 
 jobs:
   build:
@@ -35,5 +35,5 @@ jobs:
         run: |
           devtools::load_all(".")
           renv::status()
-          rmarkdown::render("vignettes/standard_reporting.Rmd")
+          devtools::build_vignettes()
         shell: Rscript {0}
