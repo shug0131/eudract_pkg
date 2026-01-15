@@ -36,5 +36,5 @@ jobs:
           devtools::load_all(".")
           renv::status()
           devtools::clean_vignettes()
-          devtools::build_vignettes()
+          devtools::build_vignettes(keep_md=TRUE)
         shell: Rscript {0}
