@@ -12,7 +12,7 @@
 #' @export
 #' @importFrom dplyr left_join mutate select arrange
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
-#' @importFrom patchwork plot_layout
+#' @importFrom patchwork plot_layout wrap_plots
 #' 
 #' @details This is essentially a list of two ggplot objects joined together in a list, named
 #' as "left.panel" and "right.panel". 
@@ -161,14 +161,21 @@ print.dot_plot <- function(x,...){
   #Deal with legend
   lg <- g_legend(left.panel)
   
+  left.panel <-  left.panel + theme(legend.position = "none")
+  right.panel <-  right.panel + theme(legend.position = "none")
+  
   # get number of rows 
   
   n <- dplyr::n_distinct( left.panel$data$term)
   
-  print( 
-    ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
-    plot_layout(heights=c(n+1,1))
-  )
+  fig <- wrap_plots(left.panel, right.panel, ncol = 2, nrow = 1)
+  fig <- wrap_plots(fig, lg, ncol = 1, nrow = 2)
+  fig <- fig + plot_layout( heights = c(n + 1,1))
+  
+  print( fig)
+  #   ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
+  #   plot_layout(heights=c(n+1,1))
+  # )
   invisible(x)
   
 }
