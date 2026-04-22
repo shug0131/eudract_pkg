@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 ```
-# eudract
+# eudract <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 The goal of eudract is to provide tools to easily produce summaries of safety data from clinical trials that can easily be uploaded into eudraCT or ClinTrials.gov . 
 

@@ -10,7 +10,7 @@ eudract_pkg](https://codecov.io/gh/shug0131/eudract_pkg/branch/master/graph/badg
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# eudract
+# eudract <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 The goal of eudract is to provide tools to easily produce summaries of
 safety data from clinical trials that can easily be uploaded into
@@ -106,4 +106,4 @@ relative_risk_table(safety_statistics, type="serious")
 dot_plot(safety_statistics, type="serious", base=4) 
 ```
 
-<img src="man/figures/README-report_example-1.png" width="100%" />
+<img src="man/figures/README-report_example-1.png" alt="" width="100%" />
